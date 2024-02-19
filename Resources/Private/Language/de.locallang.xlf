@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file target-language="de" datatype="plaintext" original="messages" date="2024-02-19T00:00:00Z">
+        <header/>
+        <body>
+            <!-- Basic fields -->
+            <trans-unit id="enableReporting">
+                <target>Aktivieren Sie die E-Mail-Berichterstellung</target>
+            </trans-unit>
+            <trans-unit id="reportingEmails">
+                <target>E-Mail-Adressen die den Bericht erhalten sollen</target>
+            </trans-unit>
+            <trans-unit id="reportingSubject">
+                <target>Betreff der Berichts-E-Mail</target>
+            </trans-unit>
+            <trans-unit id="reportingMessage">
+                <target>Nachricht der Berichts-E-Mail</target>
+            </trans-unit>
+            <trans-unit id="environment">
+                <target>Umgebung (TYPO3_CONTEXT), in der die Scheduler-Aufgabe ausgeführt werden soll</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

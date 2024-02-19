@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2024-02-19T00:00:00Z">
+        <header/>
+        <body>
+            <!-- Basic fields -->
+            <trans-unit id="enableReporting">
+                <source>Enable email reporting</source>
+            </trans-unit>
+            <trans-unit id="reportingEmails">
+                <source>Reporting email addresses</source>
+            </trans-unit>
+            <trans-unit id="reportingSubject">
+                <source>Subject of the reporting emails</source>
+            </trans-unit>
+            <trans-unit id="reportingMessage">
+                <source>Message of the reporting email</source>
+            </trans-unit>
+            <trans-unit id="environment">
+                <source>Environment (TYPO3_CONTEXT) where the scheduler task should run</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

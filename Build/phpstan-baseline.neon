@@ -1,0 +1,36 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Netresearch\\\\NrScheduler\\\\AbstractAdditionalFieldProvider\\:\\:getAdditionalFields\\(\\) has parameter \\$taskInfo with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../Classes/AbstractAdditionalFieldProvider.php
+
+		-
+			message: "#^Method Netresearch\\\\NrScheduler\\\\AbstractAdditionalFieldProvider\\:\\:getFieldValue\\(\\) has parameter \\$taskInfo with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../Classes/AbstractAdditionalFieldProvider.php
+
+		-
+			message: "#^Method Netresearch\\\\NrScheduler\\\\AbstractAdditionalFieldProvider\\:\\:saveAdditionalFields\\(\\) has parameter \\$submittedData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../Classes/AbstractAdditionalFieldProvider.php
+
+		-
+			message: "#^Method Netresearch\\\\NrScheduler\\\\AbstractAdditionalFieldProvider\\:\\:validateAdditionalFields\\(\\) has parameter \\$submittedData with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: ../Classes/AbstractAdditionalFieldProvider.php
+
+		-
+			message: "#^Unable to resolve the template type T in call to method static method TYPO3\\\\CMS\\\\Core\\\\Utility\\\\GeneralUtility\\:\\:makeInstance\\(\\)$#"
+			count: 2
+			path: ../Classes/AbstractAdditionalFieldProvider.php
+
+		-
+			message: "#^Variable method call on TYPO3\\\\CMS\\\\Scheduler\\\\Task\\\\AbstractTask\\.$#"
+			count: 1
+			path: ../Classes/AbstractAdditionalFieldProvider.php
+
+		-
+			message: "#^Variable property access on TYPO3\\\\CMS\\\\Scheduler\\\\Task\\\\AbstractTask\\.$#"
+			count: 1
+			path: ../Classes/AbstractAdditionalFieldProvider.php
