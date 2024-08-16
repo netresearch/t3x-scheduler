@@ -48,6 +48,9 @@
         "typo3/cms": {
             "extension-key": "nr_scheduler",
             "web-dir": ".build/public"
+        },
+        "branch-alias": {
+            "dev-main": "1.0.x-dev"
         }
     },
     "autoload": {
