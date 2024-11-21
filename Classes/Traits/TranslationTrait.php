@@ -40,12 +40,17 @@ trait TranslationTrait
      *
      * @param string   $name         Name of label or field
      * @param string   $languageFile Path of the language file
-     * @param string[] $data         array with data to replace in the message
+     * @param string[] $data         Array with data to replace in the message
+     * @param bool     $hideEmpty    TRUE to hide empty translation otherwise return the name
      *
      * @return string
      */
-    protected function getLabel(string $name, string $languageFile = '', array $data = []): string
-    {
+    protected function getLabel(
+        string $name,
+        string $languageFile = '',
+        array $data = [],
+        bool $hideEmpty = false,
+    ): string {
         if ($languageFile === '') {
             $languageFile = $this->defaultLanguageFile;
         }
@@ -55,6 +60,10 @@ trait TranslationTrait
         );
 
         if ($translation === '') {
+            if ($hideEmpty) {
+                return '';
+            }
+
             return $name;
         }
 

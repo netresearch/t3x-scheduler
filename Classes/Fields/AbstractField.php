@@ -37,18 +37,23 @@ abstract class AbstractField
     protected string $label;
 
     /**
-     * @var bool|int|string|null
+     * @var string
      */
-    protected bool|int|float|string|null $value;
+    protected string $description = '';
+
+    /**
+     * @var bool|int|float|string|int[]|string[]|null
+     */
+    protected array|bool|int|float|string|null $value = null;
 
     /**
      * AbstractField constructor.
      *
-     * @param string                     $identifier The field identifier
-     * @param string                     $label      The label of the field
-     * @param bool|int|float|string|null $value      The value of the field
+     * @param string                                    $identifier The field identifier
+     * @param string                                    $label      The label of the field
+     * @param bool|int|float|string|int[]|string[]|null $value      The value of the field
      */
-    public function __construct(string $identifier, string $label, bool|int|float|string|null $value)
+    public function __construct(string $identifier, string $label, array|bool|int|float|string|null $value = null)
     {
         $this->identifier = $identifier;
         $this->label      = $label;
@@ -103,11 +108,43 @@ abstract class AbstractField
     /**
      * Returns the value.
      *
-     * @return bool|int|float|string|null
+     * @return bool|int|float|string|int[]|string[]|null
      */
-    public function getValue(): bool|int|float|string|null
+    public function getValue(): array|bool|int|float|string|null
     {
         return $this->value;
+    }
+
+    /**
+     * @param bool|int|float|string|int[]|string[]|null $value
+     *
+     * @return AbstractField
+     */
+    public function setValue(float|array|bool|int|string|null $value): AbstractField
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return AbstractField
+     */
+    public function setDescription(string $description): AbstractField
+    {
+        $this->description = $description;
+
+        return $this;
     }
 
     /**
@@ -118,9 +155,10 @@ abstract class AbstractField
     public function getAdditionalField(): array
     {
         return [
-            'code'  => $this->getFieldHtml(),
-            'type'  => $this->getType(),
-            'label' => $this->getLabel(),
+            'code'        => $this->getFieldHtml(),
+            'type'        => $this->getType(),
+            'label'       => $this->getLabel(),
+            'description' => $this->getDescription(),
         ];
     }
 }

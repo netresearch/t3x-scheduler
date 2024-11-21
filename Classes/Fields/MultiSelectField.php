@@ -13,50 +13,26 @@ namespace Netresearch\NrScheduler\Fields;
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
+use function in_array;
+use function is_array;
+
 /**
- * Select field.
+ * MultiSelect field.
  *
- * @author  Axel Seemann <axel.seemann@netresearch.de>
  * @author  Rico Sonntag <rico.sonntag@netresearch.de>
  * @license Netresearch https://www.netresearch.de
  * @link    https://www.netresearch.de
  */
-class SelectField extends AbstractField
+class MultiSelectField extends SelectField
 {
-    protected string $type = 'select';
-
     /**
-     * @var array<array-key, string>
-     */
-    protected array $options = [];
-
-    /**
-     * @param array<string, string> $options
+     * Returns the field name.
      *
-     * @return SelectField
+     * @return string
      */
-    public function setOptions(array $options): SelectField
+    public function getFieldName(): string
     {
-        $this->options = $options;
-
-        return $this;
-    }
-
-    /**
-     * Returns the select box tag builder instance.
-     *
-     * @return TagBuilder
-     */
-    protected function getSelectTagBuilder(): TagBuilder
-    {
-        $tagBuilder = new TagBuilder();
-        $tagBuilder->setTagName('select');
-        $tagBuilder->forceClosingTag(true);
-        $tagBuilder->addAttribute('id', $this->getIdentifier());
-        $tagBuilder->addAttribute('name', $this->getFieldName());
-        $tagBuilder->addAttribute('class', 'form-select');
-
-        return $tagBuilder;
+        return 'tx_scheduler[' . $this->getIdentifier() . '][]';
     }
 
     /**
@@ -76,7 +52,13 @@ class SelectField extends AbstractField
             $optionTag->addAttribute('value', $value);
             $optionTag->setContent($label);
 
-            if ($value === $this->getValue()) {
+            $selectedValue = $this->getValue();
+
+            if (is_array($selectedValue)) {
+                if (in_array($value, $this->getValue(), true)) {
+                    $optionTag->addAttribute('selected', 'selected');
+                }
+            } elseif ($value === $this->getValue()) {
                 $optionTag->addAttribute('selected', 'selected');
             }
 
@@ -94,6 +76,7 @@ class SelectField extends AbstractField
     public function getFieldHtml(): string
     {
         $tagBuilder = $this->getSelectTagBuilder();
+        $tagBuilder->addAttribute('multiple', 'multiple');
         $tagBuilder->setContent($this->getSelectOptionsHtml());
 
         return $tagBuilder->render();

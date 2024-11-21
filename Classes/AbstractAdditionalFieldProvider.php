@@ -39,7 +39,7 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
     use TranslationTrait;
 
     /**
-     * Constants for field names.
+     * Constants for field names. Field name must match the property name of the task.
      *
      * @var string
      */
@@ -114,7 +114,7 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
     public function getAdditionalFields(
         array &$taskInfo,
         $task,
-        SchedulerModuleController $schedulerModule
+        SchedulerModuleController $schedulerModule,
     ): array {
         $additionalFields = [];
 
@@ -125,8 +125,20 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
             $field = GeneralUtility::makeInstance(
                 $config['type'],
                 $identifier,
-                $this->getLabel($key, $config['translationFile']),
+                $this->getLabel($key, $config['translationFile'])
+            );
+
+            $field->setValue(
                 $this->getFieldValue($key, $taskInfo, $task, $schedulerModule)
+            );
+
+            $field->setDescription(
+                $this->getLabel(
+                    $key . '.description',
+                    $config['translationFile'],
+                    [],
+                    true
+                )
             );
 
             if ($field instanceof SelectField) {
@@ -205,7 +217,7 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
     }
 
     /**
-     * Return the basic fields configuration.
+     * Return the configuration of the basic fields.
      *
      * @return array<string, array<string, bool|int|string|string[]>>
      */
@@ -253,14 +265,14 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
      * @param AbstractTask|null         $task            The task object
      * @param SchedulerModuleController $schedulerModule Parent object context
      *
-     * @return bool|int|float|string|null
+     * @return bool|int|float|string|int[]|string[]|null
      */
     protected function getFieldValue(
         string $name,
         array &$taskInfo,
         ?AbstractTask $task,
-        SchedulerModuleController $schedulerModule
-    ): bool|int|float|string|null {
+        SchedulerModuleController $schedulerModule,
+    ): array|bool|int|float|string|null {
         $fieldIdentifier = $this->getFieldKey($name);
 
         if (($taskInfo[$fieldIdentifier] ?? null) === null) {

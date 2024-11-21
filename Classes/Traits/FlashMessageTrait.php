@@ -99,7 +99,7 @@ trait FlashMessageTrait
      */
     public function addMessage(
         string $message,
-        int|ContextualFeedbackSeverity $type = ContextualFeedbackSeverity::INFO
+        int|ContextualFeedbackSeverity $type = ContextualFeedbackSeverity::INFO,
     ): void {
         $this->createFlashMessage($message, '', $type);
     }
@@ -118,7 +118,7 @@ trait FlashMessageTrait
     public function createFlashMessage(
         string $message,
         string $headline = '',
-        ContextualFeedbackSeverity $severity = ContextualFeedbackSeverity::INFO
+        ContextualFeedbackSeverity $severity = ContextualFeedbackSeverity::INFO,
     ): void {
         /** @var FlashMessage $flashMessage */
         $flashMessage = GeneralUtility::makeInstance(

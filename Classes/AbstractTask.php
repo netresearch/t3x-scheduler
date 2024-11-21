@@ -140,10 +140,10 @@ abstract class AbstractTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
         $mailApi = GeneralUtility::makeInstance(MailMessage::class);
 
         $mailApi
+            ->setFrom(MailUtility::getSystemFrom())
             ->setTo($recipients)
             ->setSubject($this->getReportingEmailSubject())
-            ->text($email)
-            ->setFrom(MailUtility::getSystemFrom());
+            ->text($email);
 
         return $mailApi->send();
     }
@@ -159,7 +159,7 @@ abstract class AbstractTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
             return [];
         }
 
-        return explode(',', $this->reportingEmails);
+        return GeneralUtility::trimExplode(',', $this->reportingEmails);
     }
 
     /**
@@ -214,7 +214,7 @@ abstract class AbstractTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
         }
 
         $currentContext = (string) Environment::getContext();
-        $contexts       = explode(',', $this->environment);
+        $contexts       = GeneralUtility::trimExplode(',', $this->environment);
 
         return in_array($currentContext, $contexts, true);
     }
