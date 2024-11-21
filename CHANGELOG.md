@@ -1,3 +1,13 @@
+# 1.1.0
+
+## MISC
+
+- 7ccc67d Add MultiSelect field
+
+## Contributors
+
+- Rico Sonntag
+
 # 1.0.1
 
 ## MISC
