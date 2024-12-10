@@ -1,3 +1,13 @@
+# 1.1.1
+
+## MISC
+
+- ed8d3b6 Update code analysis scripts
+
+## Contributors
+
+- Rico Sonntag
+
 # 1.1.0
 
 ## MISC
