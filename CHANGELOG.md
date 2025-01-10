@@ -1,3 +1,13 @@
+# 1.1.3
+
+## MISC
+
+- 5bf7eb9 Update README
+
+## Contributors
+
+- Rico Sonntag
+
 # 1.1.2
 
 ## MISC
