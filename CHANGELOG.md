@@ -1,3 +1,13 @@
+# 1.1.2
+
+## MISC
+
+- 3018cdc Add CI test for PHP 81
+
+## Contributors
+
+- Rico Sonntag
+
 # 1.1.1
 
 ## MISC
