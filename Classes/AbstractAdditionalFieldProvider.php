@@ -171,7 +171,7 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
                 $fieldKey = $this->getFieldKey($key);
 
                 if (isset($submittedData[$fieldKey])) {
-                    $value = trim($submittedData[$fieldKey]);
+                    $value = trim((string) $submittedData[$fieldKey]);
                 }
 
                 /** @var AbstractValidator $validator */
