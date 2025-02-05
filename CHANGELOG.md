@@ -1,3 +1,15 @@
+# 1.1.4
+
+## MISC
+
+- 777aded Update dev tools
+- 335c88b Fix phpstan-baseline command
+- f47098e Add github ci configuration
+
+## Contributors
+
+- Rico Sonntag
+
 # 1.1.3
 
 ## MISC
