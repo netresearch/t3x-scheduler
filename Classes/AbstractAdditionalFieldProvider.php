@@ -24,6 +24,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider as SchedulerAbstractAdditionalFieldProvider;
 use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
+use TYPO3\CMS\Scheduler\Task\Enumeration\Action;
 
 /**
  * Abstract additional field provider.
@@ -276,7 +277,7 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
         $fieldIdentifier = $this->getFieldKey($name);
 
         if (($taskInfo[$fieldIdentifier] ?? null) === null) {
-            if ($schedulerModule->getCurrentAction()->equals('edit')) {
+            if ($schedulerModule->getCurrentAction()->equals(Action::EDIT)) {
                 $taskInfo[$fieldIdentifier] = '';
 
                 if ($task instanceof AbstractTask) {
