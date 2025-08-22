@@ -266,14 +266,14 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
      * @param AbstractTask|null         $task            The task object
      * @param SchedulerModuleController $schedulerModule Parent object context
      *
-     * @return bool|int|float|string|int[]|string[]|null
+     * @return bool|int|float|string|int[]|string[]|object|null
      */
     protected function getFieldValue(
         string $name,
         array &$taskInfo,
         ?AbstractTask $task,
         SchedulerModuleController $schedulerModule,
-    ): array|bool|int|float|string|null {
+    ): array|bool|int|float|string|object|null {
         $fieldIdentifier = $this->getFieldKey($name);
 
         if (($taskInfo[$fieldIdentifier] ?? null) === null) {

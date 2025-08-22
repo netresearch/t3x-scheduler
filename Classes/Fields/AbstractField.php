@@ -42,9 +42,9 @@ abstract class AbstractField
     protected string $description = '';
 
     /**
-     * @var bool|int|float|string|int[]|string[]|null
+     * @var bool|int|float|string|object|int[]|string[]|null
      */
-    protected array|bool|int|float|string|null $value = null;
+    protected array|bool|int|float|string|object|null $value = null;
 
     /**
      * AbstractField constructor.
@@ -108,19 +108,19 @@ abstract class AbstractField
     /**
      * Returns the value.
      *
-     * @return bool|int|float|string|int[]|string[]|null
+     * @return bool|int|float|string|object|int[]|string[]|null
      */
-    public function getValue(): array|bool|int|float|string|null
+    public function getValue(): array|bool|int|float|string|object|null
     {
         return $this->value;
     }
 
     /**
-     * @param bool|int|float|string|int[]|string[]|null $value
+     * @param bool|int|float|string|object|int[]|string[]|null $value
      *
      * @return AbstractField
      */
-    public function setValue(float|array|bool|int|string|null $value): AbstractField
+    public function setValue(float|array|bool|int|string|object|null $value): AbstractField
     {
         $this->value = $value;
 
