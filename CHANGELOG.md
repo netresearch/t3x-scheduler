@@ -1,3 +1,17 @@
+# 1.1.5
+
+## MISC
+
+- 521684b Allow objects as value in field configuration
+- 411778a Use constant instead of string value
+- 1013e70 Update actions/checkout action to v5
+- c4622cd Add renovate.json
+
+## Contributors
+
+- Rico Sonntag
+- renovate[bot]
+
 # 1.1.4
 
 ## MISC
