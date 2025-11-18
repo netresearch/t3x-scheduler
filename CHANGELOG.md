@@ -1,4 +1,12 @@
-# 1.1.6
+# 1.1.7
+
+## MISC
+
+- 8b9bf92 Fix phpstan issues, add fractor
+
+## Contributors
+
+- Rico Sonntag
 
 # 1.1.5
 
