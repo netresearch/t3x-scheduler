@@ -1,3 +1,10 @@
+# 1.1.8
+
+## MISC
+
+- Remove strict_types from ext_emconf.php
+
+
 # 1.1.7
 
 ## MISC
