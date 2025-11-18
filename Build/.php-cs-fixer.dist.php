@@ -31,7 +31,7 @@ return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@PSR12'                          => true,
-        '@PER-CS2.0'                      => true,
+        '@PER-CS2x0'                      => true,
         '@Symfony'                        => true,
 
         // Additional custom rules
@@ -47,6 +47,7 @@ return (new PhpCsFixer\Config())
         ],
         'phpdoc_to_comment'               => false,
         'phpdoc_no_alias_tag'             => false,
+        'phpdoc_annotation_without_dot'   => false,
         'no_superfluous_phpdoc_tags'      => false,
         'phpdoc_separation'               => [
             'groups' => [

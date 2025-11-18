@@ -106,7 +106,7 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
     /**
      * Build the additional form fields.
      *
-     * @param array                     $taskInfo        Array with the task information
+     * @param array<mixed>              $taskInfo        Array with the task information
      * @param AbstractTask|null         $task            The task object
      * @param SchedulerModuleController $schedulerModule Parent object context
      *
@@ -122,9 +122,12 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
         foreach ($this->definedFields as $key => $config) {
             $identifier = $this->getFieldKey($key);
 
+            /** @var class-string<AbstractField> $fieldClass */
+            $fieldClass = $config['type'];
+
             /** @var AbstractField $field */
             $field = GeneralUtility::makeInstance(
-                $config['type'],
+                $fieldClass,
                 $identifier,
                 $this->getLabel($key, $config['translationFile'])
             );
@@ -155,7 +158,7 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
     /**
      * Validates the Additional fields.
      *
-     * @param array                     $submittedData   Array with Submitted data
+     * @param array<mixed>              $submittedData   Array with Submitted data
      * @param SchedulerModuleController $schedulerModule Parent object context
      *
      * @return bool
@@ -175,9 +178,12 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
                     $value = trim((string) $submittedData[$fieldKey]);
                 }
 
+                /** @var class-string<AbstractValidator> $validatorClassName */
+                $validatorClassName = $validatorClass;
+
                 /** @var AbstractValidator $validator */
                 $validator = GeneralUtility::makeInstance(
-                    $validatorClass,
+                    $validatorClassName,
                     $value,
                     $key
                 );
@@ -202,7 +208,7 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
     /**
      * Saves the data of additional fields.
      *
-     * @param array        $submittedData Data submitted by the form
+     * @param array<mixed> $submittedData Data submitted by the form
      * @param AbstractTask $task          TaskObject to save the data to
      *
      * @return void
@@ -262,7 +268,7 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
      * Get the value for a field.
      *
      * @param string                    $name            Field identifier
-     * @param array                     $taskInfo        Array with the task information
+     * @param array<mixed>              $taskInfo        Array with the task information
      * @param AbstractTask|null         $task            The task object
      * @param SchedulerModuleController $schedulerModule Parent object context
      *
@@ -283,7 +289,13 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
                 if ($task instanceof AbstractTask) {
                     $getter = 'get' . ucfirst($name);
 
-                    $taskInfo[$fieldIdentifier] = method_exists($task, $getter) ? $task->{$getter}() : $task->{$name};
+                    if (method_exists($task, $getter)) {
+                        $taskInfo[$fieldIdentifier] = call_user_func([$task, $getter]);
+                    } elseif (property_exists($task, $name)) {
+                        /** @var mixed $value */
+                        $value                      = $task->{$name};
+                        $taskInfo[$fieldIdentifier] = $value;
+                    }
                 }
             } else {
                 $taskInfo[$fieldIdentifier] = $this->definedFields[$name]['default'];
