@@ -7,6 +7,7 @@
  * LICENSE file that was distributed with this source code.
  */
 
+declare(strict_types=1);
 $EM_CONF['nr_scheduler'] = [
     'title'          => 'Netresearch - TYPO3 scheduler',
     'description'    => 'Extends the TYPO3 scheduler extension with some functions.',
