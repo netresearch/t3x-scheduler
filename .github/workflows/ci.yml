@@ -10,7 +10,6 @@ jobs:
       contents: read
     with:
       php-versions: '["8.2", "8.3", "8.4"]'
-      typo3-versions: '["^12.4", "^14.0"]'
+      typo3-versions: '["^12.4"]'
       run-unit-tests: false
       typo3-packages: '["typo3/cms-core", "typo3/cms-fluid", "typo3/cms-scheduler"]'
-      remove-dev-deps: '[{"dep":"saschaegerer/phpstan-typo3","only-for":"^12|^13"}]'
