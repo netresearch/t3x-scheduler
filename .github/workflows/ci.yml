@@ -14,3 +14,4 @@ jobs:
       run-rector: true
       run-unit-tests: false
       typo3-packages: '["typo3/cms-core", "typo3/cms-fluid", "typo3/cms-scheduler"]'
+      remove-dev-deps: '[{"dep":"saschaegerer/phpstan-typo3","only-for":"^12|^13"}]'
