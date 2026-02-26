@@ -27,6 +27,7 @@
         "platform-check": false,
         "allow-plugins": {
             "a9f/fractor-extension-installer": true,
+            "phpstan/extension-installer": true,
             "typo3/class-alias-loader": true,
             "typo3/cms-composer-installers": true
         },
@@ -45,6 +46,7 @@
         "friendsofphp/php-cs-fixer": "^3.65",
         "saschaegerer/phpstan-typo3": "^1.0 || v2.x-dev",
         "overtrue/phplint": "^9.5",
+        "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^1.0 || ^2.0",
         "phpstan/phpstan-strict-rules": "^1.0 || ^2.0",
         "phpstan/phpstan-deprecation-rules": "^1.0 || ^2.0",
