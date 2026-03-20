@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the package netresearch/nr-scheduler.
  *
  * For the full copyright and license information, please read the
@@ -11,17 +11,18 @@ declare(strict_types=1);
 
 namespace Netresearch\NrScheduler\Fields;
 
-use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
-
 use function in_array;
 use function is_array;
+
+use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 /**
  * MultiSelect field.
  *
  * @author  Rico Sonntag <rico.sonntag@netresearch.de>
  * @license Netresearch https://www.netresearch.de
- * @link    https://www.netresearch.de
+ *
+ * @see    https://www.netresearch.de
  */
 class MultiSelectField extends SelectField
 {

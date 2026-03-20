@@ -43,15 +43,15 @@
         "typo3/cms-scheduler": "^12.4 || ^14.0"
     },
     "require-dev": {
+        "a9f/typo3-fractor": "^0.5",
         "friendsofphp/php-cs-fixer": "^3.65",
-        "saschaegerer/phpstan-typo3": "^1.0 || v2.x-dev",
         "overtrue/phplint": "^9.5",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^1.0 || ^2.0",
-        "phpstan/phpstan-strict-rules": "^1.0 || ^2.0",
         "phpstan/phpstan-deprecation-rules": "^1.0 || ^2.0",
-        "ssch/typo3-rector": "^2.0 || ^3.0",
-        "a9f/typo3-fractor": "^0.5"
+        "phpstan/phpstan-strict-rules": "^1.0 || ^2.0",
+        "saschaegerer/phpstan-typo3": "^1.0",
+        "ssch/typo3-rector": "^2.0 || ^3.0"
     },
     "extra": {
         "typo3/cms": {

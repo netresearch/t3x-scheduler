@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the package netresearch/nr-scheduler.
  *
  * For the full copyright and license information, please read the
@@ -32,7 +32,8 @@ use TYPO3\CMS\Scheduler\Task\Enumeration\Action;
  * @author  Axel Seemann <axel.seemann@netresearch.de>
  * @author  Rico Sonntag <rico.sonntag@netresearch.de>
  * @license Netresearch https://www.netresearch.de
- * @link    https://www.netresearch.de
+ *
+ * @see    https://www.netresearch.de
  */
 abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAdditionalFieldProvider
 {
@@ -129,11 +130,11 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
             $field = GeneralUtility::makeInstance(
                 $fieldClass,
                 $identifier,
-                $this->getLabel($key, $config['translationFile'])
+                $this->getLabel($key, $config['translationFile']),
             );
 
             $field->setValue(
-                $this->getFieldValue($key, $taskInfo, $task, $schedulerModule)
+                $this->getFieldValue($key, $taskInfo, $task, $schedulerModule),
             );
 
             $field->setDescription(
@@ -141,8 +142,8 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
                     $key . '.description',
                     $config['translationFile'],
                     [],
-                    true
-                )
+                    true,
+                ),
             );
 
             if ($field instanceof SelectField) {
@@ -185,7 +186,7 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
                 $validator = GeneralUtility::makeInstance(
                     $validatorClassName,
                     $value,
-                    $key
+                    $key,
                 );
 
                 if (!$validator->validate()) {

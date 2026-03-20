@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the package netresearch/nr-scheduler.
  *
  * For the full copyright and license information, please read the
@@ -23,7 +23,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @author  Axel Seemann <axel.seemann@netresearch.de>
  * @author  Rico Sonntag <rico.sonntag@netresearch.de>
  * @license Netresearch https://www.netresearch.de
- * @link    https://www.netresearch.de
+ *
+ * @see    https://www.netresearch.de
  */
 trait FlashMessageTrait
 {
@@ -125,7 +126,7 @@ trait FlashMessageTrait
             FlashMessage::class,
             $message,
             $headline,
-            $severity
+            $severity,
         );
 
         if (PHP_SAPI === 'cli') {

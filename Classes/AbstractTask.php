@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the package netresearch/nr-scheduler.
  *
  * For the full copyright and license information, please read the
@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Netresearch\NrScheduler;
 
+use function in_array;
+
 use Netresearch\NrScheduler\Traits\FlashMessageTrait;
 use Netresearch\NrScheduler\Traits\TranslationTrait;
 use TYPO3\CMS\Core\Core\Environment;
@@ -18,15 +20,14 @@ use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MailUtility;
 
-use function in_array;
-
 /**
  * Abstract scheduler task.
  *
  * @author  Axel Seemann <axel.seemann@netresearch.de>
  * @author  Rico Sonntag <rico.sonntag@netresearch.de>
  * @license Netresearch https://www.netresearch.de
- * @link    https://www.netresearch.de
+ *
+ * @see    https://www.netresearch.de
  */
 abstract class AbstractTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
 {
@@ -111,17 +112,17 @@ abstract class AbstractTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
         try {
             $sentMails = $this->sendEmail(
                 $this->getReportingEmailsAsArray(),
-                $this->getReportingContent($message)
+                $this->getReportingContent($message),
             );
 
             if ($sentMails === false) {
                 throw new Exception(
-                    'The reporting could not be sent!'
+                    'The reporting could not be sent!',
                 );
             }
         } catch (\Exception $exception) {
             throw new Exception(
-                'The reporting could not be sent due to the mail api throws the following error: ' . $exception->getMessage()
+                'The reporting could not be sent due to the mail api throws the following error: ' . $exception->getMessage(),
             );
         }
     }
