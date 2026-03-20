@@ -1,6 +1,6 @@
 <?php
 
-/**
+/*
  * This file is part of the package netresearch/nr-scheduler.
  *
  * For the full copyright and license information, please read the
@@ -17,8 +17,7 @@ namespace Netresearch\NrScheduler;
  * @author  Axel Seemann <axel.seemann@netresearch.de>
  * @author  Rico Sonntag <rico.sonntag@netresearch.de>
  * @license Netresearch https://www.netresearch.de
- * @link    https://www.netresearch.de
+ *
+ * @see    https://www.netresearch.de
  */
-class Exception extends \Exception
-{
-}
+class Exception extends \Exception {}
