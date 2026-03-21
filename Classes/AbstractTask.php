@@ -123,6 +123,8 @@ abstract class AbstractTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
         } catch (\Exception $exception) {
             throw new Exception(
                 'The reporting could not be sent due to the mail api throws the following error: ' . $exception->getMessage(),
+                0,
+                $exception,
             );
         }
     }
