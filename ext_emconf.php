@@ -18,6 +18,7 @@ $EM_CONF['nr_scheduler'] = [
     'version'        => '1.1.8',
     'constraints'    => [
         'depends' => [
+            'php'   => '8.2.0-8.4.99',
             'typo3' => '12.4.0-12.99.99',
         ],
         'conflicts' => [
