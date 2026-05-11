@@ -7,5 +7,13 @@
   ],
   "automerge": true,
   "automergeType": "pr",
-  "platformAutomerge": true
+  "platformAutomerge": true,
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^typo3/cms-"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false,
+      "description": "Block automatic TYPO3 framework major upgrades; majors require manual scope review (extension is pinned to ^12.4, see ext_emconf.php). Pattern ^typo3/cms- also covers typo3/cms-composer-installers. See PR #28 / PRs #34-36 for prior incidents where Renovate bypassed the composer.json constraint."
+    }
+  ]
 }
