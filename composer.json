@@ -44,7 +44,7 @@
         "typo3/cms-scheduler": "^12.4"
     },
     "require-dev": {
-        "a9f/typo3-fractor": "^0.5",
+        "a9f/typo3-fractor": "^0.5 || ^1.0",
         "friendsofphp/php-cs-fixer": "^3.65",
         "overtrue/phplint": "^9.5",
         "phpstan/extension-installer": "^1.0",
