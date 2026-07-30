@@ -19,7 +19,7 @@ $EM_CONF['nr_scheduler'] = [
     'constraints'    => [
         'depends' => [
             'php'   => '8.2.0-8.99.99',
-            'typo3' => '13.4.0-14.99.99',
+            'typo3' => '13.4.0-14.3.99',
         ],
         'conflicts' => [
         ],
