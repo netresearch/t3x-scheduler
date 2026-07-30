@@ -45,7 +45,7 @@ abstract class AbstractField
     /**
      * @var bool|int|float|string|object|int[]|string[]|null
      */
-    protected array|bool|int|float|string|object|null $value = null;
+    protected array|bool|int|float|string|object|null $value;
 
     /**
      * AbstractField constructor.
