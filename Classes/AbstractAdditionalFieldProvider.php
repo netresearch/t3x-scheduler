@@ -23,8 +23,8 @@ use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider as SchedulerAbstractAdditionalFieldProvider;
 use TYPO3\CMS\Scheduler\Controller\SchedulerModuleController;
+use TYPO3\CMS\Scheduler\SchedulerManagementAction;
 use TYPO3\CMS\Scheduler\Task\AbstractTask;
-use TYPO3\CMS\Scheduler\Task\Enumeration\Action;
 
 /**
  * Abstract additional field provider.
@@ -34,6 +34,11 @@ use TYPO3\CMS\Scheduler\Task\Enumeration\Action;
  * @license Netresearch https://www.netresearch.de
  *
  * @see    https://www.netresearch.de
+ *
+ * @deprecated since 2.0.0, will be removed together with TYPO3 v14 support. This class
+ *             wraps \TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider, which TYPO3
+ *             deprecated in v14 and removes in v15.0. Migrate consuming tasks to native
+ *             task types with additional fields declared via TCA.
  */
 abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAdditionalFieldProvider
 {
@@ -80,7 +85,7 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
      *
      * @var array<string, array<string, bool|int|string|string[]>>
      */
-    protected array $definedFields = [];
+    protected array $definedFields;
 
     /**
      * Containing the submitted data.
@@ -284,7 +289,7 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
         $fieldIdentifier = $this->getFieldKey($name);
 
         if (($taskInfo[$fieldIdentifier] ?? null) === null) {
-            if ($schedulerModule->getCurrentAction()->equals(Action::EDIT)) {
+            if ($schedulerModule->getCurrentAction() === SchedulerManagementAction::EDIT) {
                 $taskInfo[$fieldIdentifier] = '';
 
                 if ($task instanceof AbstractTask) {

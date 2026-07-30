@@ -15,7 +15,10 @@ use function in_array;
 
 use Netresearch\NrScheduler\Traits\FlashMessageTrait;
 use Netresearch\NrScheduler\Traits\TranslationTrait;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Throwable;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MailUtility;
@@ -110,17 +113,11 @@ abstract class AbstractTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
         }
 
         try {
-            $sentMails = $this->sendEmail(
+            $this->sendEmail(
                 $this->getReportingEmailsAsArray(),
                 $this->getReportingContent($message),
             );
-
-            if ($sentMails === false) {
-                throw new Exception(
-                    'The reporting could not be sent!',
-                );
-            }
-        } catch (\Exception $exception) {
+        } catch (Throwable $exception) {
             throw new Exception(
                 'The reporting could not be sent due to the mail api throws the following error: ' . $exception->getMessage(),
                 0,
@@ -132,23 +129,31 @@ abstract class AbstractTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
     /**
      * Send the reporting emails.
      *
+     * Delivery failures surface as a Symfony TransportExceptionInterface, which the
+     * caller wraps into an Exception. TYPO3 v14 removed MailMessage::send(), so the
+     * message is handed to the MailerInterface service instead.
+     *
      * @param string[] $recipients Array with email addresses the mail should send to
      * @param string   $email      The email content which will be sent
      *
-     * @return bool
+     * @return void
+     *
+     * @throws TransportExceptionInterface
      */
-    private function sendEmail(array $recipients, string $email): bool
+    private function sendEmail(array $recipients, string $email): void
     {
-        /** @var MailMessage $mailApi */
-        $mailApi = GeneralUtility::makeInstance(MailMessage::class);
+        /** @var MailMessage $mailMessage */
+        $mailMessage = GeneralUtility::makeInstance(MailMessage::class);
 
-        $mailApi
+        $mailMessage
             ->setFrom(MailUtility::getSystemFrom())
             ->setTo($recipients)
             ->setSubject($this->getReportingEmailSubject())
             ->text($email);
 
-        return $mailApi->send();
+        /** @var MailerInterface $mailer */
+        $mailer = GeneralUtility::makeInstance(MailerInterface::class);
+        $mailer->send($mailMessage);
     }
 
     /**
