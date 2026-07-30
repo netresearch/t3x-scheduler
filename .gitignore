@@ -12,6 +12,7 @@ composer.lock
 
 # Build stuff
 .build/
+var/
 
 # Cache
 .php-cs-fixer.cache

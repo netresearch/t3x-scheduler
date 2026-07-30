@@ -15,22 +15,65 @@ jobs:
     permissions:
       contents: read
     with:
-        php-versions: '["8.2","8.3","8.4"]'
-        typo3-versions: '["^12.4"]'
+        php-versions: '["8.2","8.3","8.4","8.5"]'
+        typo3-versions: '["^13.4","^14.3"]'
+        typo3-packages: '["typo3/cms-core", "typo3/cms-fluid", "typo3/cms-scheduler"]'
+        run-functional-tests: true
+        functional-test-db: 'sqlite'
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  # The shared ci.yml has no Fractor stage (it exposes run-lint / run-cgl /
+  # run-phpstan / run-rector / run-*-tests / run-docs only), so composer
+  # ci:test:php:fractor was gated locally and nowhere else. This job closes
+  # that gap until the input exists upstream; it mirrors the shared Rector
+  # stage, including the pinned action revisions.
+  fractor:
+    name: Fractor
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@bf7454d06d71f1098171f2acdf0cd4708d7b5920 # v2.20.0
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240 # 2.37.2
+        with:
+          php-version: '8.2'
+          extensions: intl, mbstring, xml
+          tools: composer:v2
+          coverage: none
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-fractor-${{ hashFiles('composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-fractor-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run Fractor
+        run: composer ci:test:php:fractor
 
   security:
     uses: netresearch/typo3-ci-workflows/.github/workflows/security.yml@main
     permissions:
       contents: read
       security-events: write
-    with:
-      # TYPO3 v12.4 is in ELTS; the SA-2026 fixes (12.4.46) ship only via
-      # the paid ELTS repository and are absent from public Packagist, so
-      # `composer audit` can never pass on the free v12 line this extension
-      # targets. Skip it until the extension moves to a maintained branch.
-      skip-composer-audit: true
 
   fuzz:
     uses: netresearch/typo3-ci-workflows/.github/workflows/fuzz.yml@main
