@@ -4,6 +4,7 @@
 
 - Drop TYPO3 v12.4 support; the extension now requires TYPO3 ^13.4 || ^14.3
 - `AbstractAdditionalFieldProvider` is deprecated and will be removed together with TYPO3 v14 support, because TYPO3 removes `\TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider` in v15.0 (use native task types with additional fields via TCA)
+- `AbstractAdditionalFieldProvider::$definedFields` and `AbstractField::$value` no longer carry a declaration-time default. Both constructors assign them unconditionally, so subclasses calling `parent::__construct()` are unaffected. A subclass that overrides the constructor **without** calling the parent previously read `[]` resp. `null` and now raises `Error: Typed property ... must not be accessed before initialization`
 
 ## FEATURES
 
