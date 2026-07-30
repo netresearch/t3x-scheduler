@@ -3,7 +3,12 @@ name: Release
 on:
   push:
     tags:
-      - 'v*'
+      # This repository tags releases without a "v" prefix (1.0.0 ... 1.1.8).
+      # The "v*" pattern alone therefore never fires. The called workflow
+      # strips an optional leading "v" and requires a bare X.Y.Z afterwards,
+      # so both spellings resolve to the same version.
+      - '[0-9]+.[0-9]+.[0-9]+'
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 
 permissions: {}
 
