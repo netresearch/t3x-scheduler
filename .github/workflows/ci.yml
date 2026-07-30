@@ -15,8 +15,11 @@ jobs:
     permissions:
       contents: read
     with:
-        php-versions: '["8.2","8.3","8.4"]'
-        typo3-versions: '["^12.4"]'
+        php-versions: '["8.2","8.3","8.4","8.5"]'
+        typo3-versions: '["^13.4","^14.3"]'
+        typo3-packages: '["typo3/cms-core", "typo3/cms-fluid", "typo3/cms-scheduler"]'
+        run-functional-tests: true
+        functional-test-db: 'sqlite'
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
@@ -25,12 +28,6 @@ jobs:
     permissions:
       contents: read
       security-events: write
-    with:
-      # TYPO3 v12.4 is in ELTS; the SA-2026 fixes (12.4.46) ship only via
-      # the paid ELTS repository and are absent from public Packagist, so
-      # `composer audit` can never pass on the free v12 line this extension
-      # targets. Skip it until the extension moves to a maintained branch.
-      skip-composer-audit: true
 
   fuzz:
     uses: netresearch/typo3-ci-workflows/.github/workflows/fuzz.yml@main

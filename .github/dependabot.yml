@@ -10,9 +10,11 @@ updates:
     schedule:
       interval: "daily"
     versioning-strategy: increase-if-necessary
-    # Block automatic TYPO3 framework major upgrades; extension is pinned to
-    # ^12.4 (see ext_emconf.php). Renovate has bypassed this in the past
-    # (PR #28 / PRs #34-36), so Dependabot must also enforce it as a backstop.
+    # Block automatic TYPO3 framework major upgrades; the extension supports
+    # ^13.4 || ^14.3 (see ext_emconf.php) and a new major needs a reviewed code
+    # migration plus a passing test matrix, not a constraint bump. Renovate has
+    # raised such unmigrated bumps before (PR #28 / PRs #34-36), so Dependabot
+    # must also enforce this as a backstop.
     ignore:
       - dependency-name: "typo3/cms-*"
         update-types: ["version-update:semver-major"]

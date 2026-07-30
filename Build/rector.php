@@ -25,6 +25,7 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/../Classes',
         __DIR__ . '/../Configuration',
         __DIR__ . '/../Resources',
+        __DIR__ . '/../Tests',
         __DIR__ . '/../ext_*.php',
     ]);
 
@@ -49,8 +50,8 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::STRICT_BOOLEANS,
         SetList::TYPE_DECLARATION,
 
-        LevelSetList::UP_TO_PHP_81,
-        Typo3LevelSetList::UP_TO_TYPO3_12,
+        LevelSetList::UP_TO_PHP_82,
+        Typo3LevelSetList::UP_TO_TYPO3_14,
     ]);
 
     // Skip some rules
