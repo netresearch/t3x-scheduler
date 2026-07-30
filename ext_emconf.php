@@ -15,11 +15,11 @@ $EM_CONF['nr_scheduler'] = [
     'author_email'   => 'rico.sonntag@netresearch.de',
     'author_company' => 'Netresearch DTT GmbH',
     'state'          => 'stable',
-    'version'        => '1.1.8',
+    'version'        => '2.0.0',
     'constraints'    => [
         'depends' => [
             'php'   => '8.2.0-8.99.99',
-            'typo3' => '12.4.0-12.99.99',
+            'typo3' => '13.4.0-14.99.99',
         ],
         'conflicts' => [
         ],
