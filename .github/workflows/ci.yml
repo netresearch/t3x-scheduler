@@ -2,6 +2,7 @@ name: CI
 
 on:
   push:
+    branches: [main]
   pull_request:
   merge_group:
   schedule:
@@ -9,6 +10,10 @@ on:
 
 permissions: {}
 
+# This workflow runs the extension's own test matrix and is the ONE per-extension
+# CI value: its `with:` block differs per extension and is listed under
+# intentional-drift. The security/quality jobs with elevated permissions are
+# drift-enforced in checks.yml; do not duplicate them here.
 jobs:
   ci:
     uses: netresearch/typo3-ci-workflows/.github/workflows/ci.yml@main
@@ -23,56 +28,3 @@ jobs:
         run-fractor: true
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
-  security:
-    uses: netresearch/typo3-ci-workflows/.github/workflows/security.yml@main
-    permissions:
-      contents: read
-      security-events: write
-
-  fuzz:
-    uses: netresearch/typo3-ci-workflows/.github/workflows/fuzz.yml@main
-    permissions:
-      contents: read
-
-  license-check:
-    uses: netresearch/typo3-ci-workflows/.github/workflows/license-check.yml@main
-    permissions:
-      contents: read
-
-  codeql:
-    uses: netresearch/.github/.github/workflows/codeql.yml@main
-    permissions:
-      contents: read
-      security-events: write
-      actions: read
-
-  scorecard:
-    if: github.event_name == 'schedule' || (github.event_name == 'push' && github.ref_name == github.event.repository.default_branch)
-    uses: netresearch/.github/.github/workflows/scorecard.yml@main
-    permissions:
-      contents: read
-      security-events: write
-      id-token: write
-      actions: read
-
-  dependency-review:
-    if: github.event_name == 'pull_request'
-    uses: netresearch/.github/.github/workflows/dependency-review.yml@main
-    permissions:
-      contents: read
-      pull-requests: write
-
-  pr-quality:
-    if: github.event_name == 'pull_request'
-    uses: netresearch/.github/.github/workflows/pr-quality.yml@main
-    permissions:
-      contents: read
-      pull-requests: write
-
-  labeler:
-    if: github.event_name == 'pull_request'
-    uses: netresearch/.github/.github/workflows/labeler.yml@main
-    permissions:
-      contents: read
-      pull-requests: write
