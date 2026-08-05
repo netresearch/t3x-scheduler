@@ -16,3 +16,13 @@ parameters:
         - %currentWorkingDirectory%/ext_emconf.php
 
     treatPhpDocTypesAsCertain: false
+
+    # ergebnis/phpstan-rules is auto-registered by phpstan/extension-installer
+    # (transitively required via netresearch/typo3-ci-workflows). Its default
+    # ruleset (allRules: true) forbids TYPO3-mandatory patterns (extending
+    # framework base classes, isset(), nullable parameters, ...) and would add
+    # 70 findings on unchanged code. Disabled here to keep this changeset
+    # behavior-preserving — same treatment as the shared org phpstan.neon;
+    # curating individual ergebnis rules is a separate migration.
+    ergebnis:
+        allRules: false
