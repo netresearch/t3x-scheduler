@@ -33,8 +33,11 @@ return static function (RectorConfig $rectorConfig) use ($configure): void {
         glob(__DIR__ . '/../ext_*.php') ?: [],
     ));
 
+    // TYPO3 migration level: v13, the lowest still-supported major
+    // (typo3-ci-workflows#155 fleet convention) — UP_TO_TYPO3_14 belongs to
+    // the release that drops ^13.4 support.
     $rectorConfig->sets([
-        Typo3LevelSetList::UP_TO_TYPO3_14,
+        Typo3LevelSetList::UP_TO_TYPO3_13,
     ]);
 
     $rectorConfig->skip([
