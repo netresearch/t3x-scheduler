@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.3/phpunit.xsd"
-         bootstrap="../.build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTestsBootstrap.php"
-         cacheDirectory="../.build/.phpunit.cache"
+         bootstrap="../.Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTestsBootstrap.php"
+         cacheDirectory="../.Build/.phpunit.cache"
          beStrictAboutOutputDuringTests="true"
          colors="true"
          displayDetailsOnTestsThatTriggerDeprecations="true"
@@ -25,7 +25,7 @@
         <env name="TYPO3_CONTEXT" value="Testing"/>
     </php>
     <logging>
-        <junit outputFile="../.build/phpunit-functional-report.xml"/>
+        <junit outputFile="../.Build/phpunit-functional-report.xml"/>
     </logging>
     <source restrictNotices="true"
             restrictWarnings="true"

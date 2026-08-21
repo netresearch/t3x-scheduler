@@ -29,7 +29,7 @@ PHP source of the `nr_scheduler` TYPO3 extension: base classes that other Netres
 
 <!-- AGENTS-GENERATED:START setup -->
 ## Setup & environment
-- Install: `composer install` (binaries in `.build/bin/`)
+- Install: `composer install` (binaries in `.Build/bin/`)
 - PHP: ^8.2 · TYPO3: ^13.4 || ^14.3 (core, fluid, scheduler)
 - Composer package `netresearch/nr-scheduler`, extension key `nr_scheduler`
 <!-- AGENTS-GENERATED:END setup -->

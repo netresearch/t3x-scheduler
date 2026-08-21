@@ -39,7 +39,7 @@ PHPUnit configs live in `Build/`, not here: `Build/phpunit.xml` and `Build/Funct
 <!-- AGENTS-GENERATED:END structure -->
 
 ## Setup
-- `composer install` (binaries land in `.build/bin/`, configured via composer.json `config`)
+- `composer install` (binaries land in `.Build/bin/`, configured via composer.json `config`)
 - Functional tests boot a real TYPO3: with no MySQL/MariaDB available, set `typo3DatabaseDriver=pdo_sqlite` (CI does the same)
 - To test against the other supported core locally: `composer update --with "typo3/cms-core:^13.4" --with "typo3/cms-fluid:^13.4" --with "typo3/cms-scheduler:^13.4"`
 
@@ -49,8 +49,8 @@ PHPUnit configs live in `Build/`, not here: `Build/phpunit.xml` and `Build/Funct
 |------|---------|
 | Unit tests | `composer ci:test:php:unit` |
 | Functional tests | `typo3DatabaseDriver=pdo_sqlite composer ci:test:php:functional` |
-| Unit coverage (HTML) | `composer ci:test:php:unit:coverage` → `.build/coverage/` |
-| Single file | `.build/bin/phpunit --configuration Build/phpunit.xml Tests/Unit/Fields/FieldRenderingTest.php` |
+| Unit coverage (HTML) | `composer ci:test:php:unit:coverage` → `.Build/coverage/` |
+| Single file | `.Build/bin/phpunit --configuration Build/phpunit.xml Tests/Unit/Fields/FieldRenderingTest.php` |
 
 Functional tests need a database; without MySQL/MariaDB use the SQLite driver env var above (CI does the same).
 <!-- AGENTS-GENERATED:END commands -->
