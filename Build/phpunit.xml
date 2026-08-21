@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.3/phpunit.xsd"
-         bootstrap="../.build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTestsBootstrap.php"
-         cacheDirectory="../.build/.phpunit.cache"
+         bootstrap="../.Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTestsBootstrap.php"
+         cacheDirectory="../.Build/.phpunit.cache"
          backupGlobals="true"
          beStrictAboutOutputDuringTests="true"
          colors="true"
@@ -17,7 +17,7 @@
          failOnWarning="true"
 >
     <testsuites>
-        <testsuite name="nr_scheduler">
+        <testsuite name="unit">
             <directory>../Tests/Unit</directory>
         </testsuite>
     </testsuites>
@@ -26,7 +26,7 @@
         <env name="TYPO3_CONTEXT" value="Testing"/>
     </php>
     <logging>
-        <junit outputFile="../.build/phpunit-report.xml"/>
+        <junit outputFile="../.Build/phpunit-report.xml"/>
     </logging>
     <source restrictNotices="true"
             restrictWarnings="true"

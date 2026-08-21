@@ -7,7 +7,7 @@
 **Precedence:** the **closest `AGENTS.md`** to the files you're changing wins. Root holds global defaults only. Component map: `docs/ARCHITECTURE.md`.
 
 ## Commands
-> Source: composer.json scripts + Makefile (verified 2026-08-19). Binaries land in `.build/bin/`, not `vendor/bin/`.
+> Source: composer.json scripts + Makefile (verified 2026-08-19). Binaries land in `.Build/bin/`, not `vendor/bin/`.
 
 <!-- AGENTS-GENERATED:START commands -->
 | Task | Command |
@@ -106,7 +106,7 @@ Build/           → tool configs (phpstan, rector, fractor, phpunit XML) + Scri
 
 ### Never Do
 - Commit secrets, credentials, or sensitive data
-- Commit `composer.lock` or anything under `.build/` (both gitignored; extension ships without a lock file)
+- Commit `composer.lock` or anything under `.Build/` (both gitignored; extension ships without a lock file)
 - Push directly to `main` — open a PR
 - Merge a PR before all review threads are resolved
 - Squash commits during merge or rebase unless the user explicitly asked
