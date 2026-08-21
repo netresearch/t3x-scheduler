@@ -16,7 +16,7 @@
          failOnWarning="true"
 >
     <testsuites>
-        <testsuite name="nr_scheduler_functional">
+        <testsuite name="functional">
             <directory>../Tests/Functional</directory>
         </testsuite>
     </testsuites>

@@ -17,7 +17,7 @@
          failOnWarning="true"
 >
     <testsuites>
-        <testsuite name="nr_scheduler">
+        <testsuite name="unit">
             <directory>../Tests/Unit</directory>
         </testsuite>
     </testsuites>
