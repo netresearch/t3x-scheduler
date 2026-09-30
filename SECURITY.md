@@ -44,6 +44,10 @@ Use [GitHub Security Advisories](https://github.com/netresearch/t3x-scheduler/se
 
 This policy covers the code of the `nr_scheduler` TYPO3 extension (Composer package `netresearch/nr-scheduler`). For vulnerabilities in dependencies or TYPO3 core, please report to the respective upstream projects.
 
+## Security Expectations
+
+What the extension protects and what it does not, its trust boundaries and the argument for how common weaknesses are countered are described in [docs/SECURITY-ASSURANCE.md](docs/SECURITY-ASSURANCE.md).
+
 ## Safe Harbor
 
 We consider security research conducted in good faith to be authorized. We will not pursue legal action against researchers who follow responsible disclosure practices.

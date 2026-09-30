@@ -59,6 +59,11 @@ composer update --with "typo3/cms-core:^13.4" --with "typo3/cms-fluid:^13.4" --w
 ```
 
 
+## Security
+
+Report vulnerabilities as described in [SECURITY.md](SECURITY.md). What the extension does and does not protect, its trust boundaries and how common weaknesses are countered are described in [docs/SECURITY-ASSURANCE.md](docs/SECURITY-ASSURANCE.md).
+
+
 ## Governance and policies
 
 This extension follows the organisation-wide Netresearch policies:
