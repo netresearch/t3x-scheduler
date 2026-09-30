@@ -28,7 +28,7 @@ Non-administrator backend users, frontend visitors and anonymous HTTP clients ha
 ## What tasks execute, and how arguments are passed
 
 - **What runs.** The work of a task is the consuming extension's `executeTask()`. This extension starts no processes and runs no commands: `Classes/` contains no call to `exec`, `shell_exec`, `system`, `passthru`, `proc_open`, `popen`, `eval` or `unserialize`, and no HTTP client. The only side effects of its own are the failure mail (`AbstractTask::sendEmail()`, through TYPO3's `MailerInterface` with the sender from `MailUtility::getSystemFrom()`) and flash messages (`Classes/Traits/FlashMessageTrait.php`, printed to standard output when running on the CLI).
-- **Where the arguments come from.** Task settings are not command-line arguments. An administrator enters them in the scheduler form; the browser posts them as `tx_scheduler[<field>]` (`AbstractField::getFieldName()`, `MultiSelectField::getFieldName()`). TYPO3 core hands the submitted values to `AbstractAdditionalFieldProvider::validateAdditionalFields()`, which trims each value and runs the validators the field configuration names; the five basic fields have none. `saveAdditionalFields()` then assigns the basic values to the public properties of the task, and TYPO3 core stores the task in `tx_scheduler_task`. At run time core restores the task and calls `execute()`, which reads those properties.
+- **Where the arguments come from.** Task settings are not command-line arguments. An administrator enters them in the scheduler form; the browser posts them as `tx_scheduler[<field>]` (`AbstractField::getFieldName()`, `MultiSelectField::getFieldName()`). TYPO3 core hands the submitted values to `AbstractAdditionalFieldProvider::validateAdditionalFields()`, which runs the validators the field configuration names on a trimmed copy of each posted value; fields without validators, which includes the five basic fields, are not checked. `saveAdditionalFields()` then assigns the basic values, as posted and not trimmed, to the public properties of the task, and TYPO3 core stores the task in `tx_scheduler_task`. At run time core restores the task and calls `execute()`, which reads those properties.
 - **How the values are used.** `environment` is split on commas and compared strictly with the current application context (`in_array(..., true)`). `reportingEmails` is split on commas and passed as recipient list to Symfony's `MailMessage::setTo()`; `reportingSubject` and `reportingMessage` become the subject and part of the plain-text body. No value is used to build a file path, a database query, a shell command or a class name.
 
 ## Security expectations
@@ -51,7 +51,7 @@ Users cannot expect:
 
 | Boundary | Input that crosses it | Control |
 |----------|-----------------------|---------|
-| Administrator's browser → TYPO3 backend → field provider | Posted `tx_scheduler[...]` values | Access to the Scheduler module is administrator-only (TYPO3 core); values are trimmed and passed through the configured validators (`validateAdditionalFields()`; `AbstractAdditionalFieldProviderTest::validateAdditionalFieldsRejectsDataAndReportsTheValidatorMessage`) |
+| Administrator's browser → TYPO3 backend → field provider | Posted `tx_scheduler[...]` values | Access to the Scheduler module is administrator-only (TYPO3 core); fields that name validators are checked on a trimmed copy of the posted value, the stored value is the posted one (`validateAdditionalFields()`, `saveAdditionalFields()`; `AbstractAdditionalFieldProviderTest::validateAdditionalFieldsRejectsDataAndReportsTheValidatorMessage`) |
 | Stored task → scheduler form | Stored settings rendered as HTML | Escaped on output (see Security expectations) |
 | Stored task → mail | Recipients, subject, message, exception text | Addresses and headers are handled by Symfony Mime/Mailer through `MailMessage` and `MailerInterface`; the body is plain text (`MailMessage::text()`), not HTML |
 | Consuming extension → this library | Field configuration, validators, `executeTask()` | Trusted code, installed by the site owner |
@@ -63,14 +63,14 @@ Threats considered: a lower-privileged backend user or a visitor changing a task
 
 - **Least privilege and no new entry points.** The extension registers no route, middleware, plugin, command or table (`Configuration/Services.yaml` only enables autowiring), so it adds no attack surface beyond the administrator-only Scheduler module it extends.
 - **Fail visibly.** Reporting never swallows a failure: `execute()` rethrows the task's exception, and a failed mail delivery raises `Netresearch\NrScheduler\Exception` with the cause attached.
-- **Escape on output.** Form HTML is built with `TagBuilder` rather than string concatenation; the only hand-written markup is the hidden fallback input in `CheckBoxField`, whose name comes from the developer's field identifier, not from stored data.
+- **Escape on output.** Form HTML is built with `TagBuilder` rather than string concatenation; the only hand-written markup is the hidden fallback input in `CheckBoxField`, whose name comes from the developer's field identifier, not from stored data. Option labels of `SelectField` and `MultiSelectField` are set as tag content without escaping; they come from the developer's field configuration, not from stored data.
 - **Strict typing.** Every PHP file under `Classes/` and `Tests/` declares `strict_types=1`, properties are typed, and PHPStan runs at level 6 with strict and deprecation rules (`Build/phpstan.neon`).
 
 ## Countering common weaknesses
 
 | Weakness (CWE / OWASP) | Counter | Evidence |
 |------------------------|---------|----------|
-| CWE-79 Cross-site scripting (OWASP A03 Injection) | Attribute values escaped by `TagBuilder::addAttribute()`; textarea content escaped by `TextAreaField` | `Classes/Fields/`, `FieldRenderingTest::textAreaFieldEscapesMarkupInItsContent` |
+| CWE-79 Cross-site scripting (OWASP A03 Injection) | Attribute values escaped by `TagBuilder::addAttribute()`; textarea content escaped by `TextAreaField`; select option labels are developer-supplied and not escaped | `Classes/Fields/`, `FieldRenderingTest::textAreaFieldEscapesMarkupInItsContent` |
 | CWE-78 OS command injection, CWE-94 code injection | No process execution, `eval` or dynamic include in `Classes/` | `Classes/` (no such calls) |
 | CWE-502 Deserialisation of untrusted data | The extension does not unserialise anything; storing and restoring the task is TYPO3 core's job | `Classes/` |
 | CWE-89 SQL injection | No database access of its own | `Classes/` |
