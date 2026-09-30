@@ -57,3 +57,20 @@ To verify the other supported core version locally:
 ```bash
 composer update --with "typo3/cms-core:^13.4" --with "typo3/cms-fluid:^13.4" --with "typo3/cms-scheduler:^13.4"
 ```
+
+
+## Governance and policies
+
+This extension follows the organisation-wide Netresearch policies:
+
+- [Governance](https://github.com/netresearch/.github/blob/main/GOVERNANCE.md): ownership, roles, how decisions are made and conflicts resolved.
+- [Roadmap](https://github.com/netresearch/.github/blob/main/ROADMAP.md): planned and excluded work for the next twelve months.
+- [Handling of dependency and code analysis findings](https://github.com/netresearch/.github/blob/main/SECURITY.md#handling-of-dependency-and-code-analysis-findings): which vulnerability, licence and static-analysis findings must be fixed, by when, and how exceptions are recorded.
+- [Secret management](https://github.com/netresearch/.github/blob/main/SECURITY.md#secret-management): where CI and release credentials are stored, who may use them, how committed secrets are detected, and when secrets are rotated.
+- [Access roster](https://github.com/netresearch/.github/blob/main/docs/access-roster.md): the people and teams with administrative or write access to this repository.
+
+Checks that run on every pull request in this repository:
+
+- `.github/workflows/checks.yml`: Composer Audit (fails on any advisory for an installed package; `composer.json` records one exception under `config.audit.ignore`, `PKSA-y2cr-5h3j-g3ys` in `firebase/php-jwt` via `typo3/cms-core`) and Opengrep SAST (fails on findings of severity WARNING or higher), both through `typo3-ci-workflows`' `security.yml`; Dependency Review (fails on newly added dependencies with a vulnerability of severity high or higher); PHP License Audit (`license-check.yml`, fails on an SSPL or BSL licensed Composer dependency); CodeQL with language auto-detection, which finds no JavaScript or Go here and analyses the workflow files (CodeQL has no PHP analysis; PHPStan and Opengrep cover the PHP code); Betterleaks secret scanning; zizmor for the workflow files (reported to code scanning, not blocking); the pull request size check. The fuzz job is skipped because `Build/phpunit.xml` defines no `Fuzz` test suite. The OpenSSF Scorecard job runs only on pushes to `main` and on the weekly schedule.
+- `.github/workflows/ci.yml`: PHP lint on PHP 8.2 to 8.5; code style (PHP-CS-Fixer, `Build/.php-cs-fixer.dist.php`), Rector (`Build/rector.php`) and Fractor (`Build/fractor.php`) on PHP 8.2; PHPStan (level 6 with the baseline `Build/phpstan-baseline.neon`, `Build/phpstan.neon`), unit tests and functional tests (SQLite) on PHP 8.2 to 8.5 with TYPO3 ^13.4 and ^14.3. There is no `Documentation/` directory to render.
+- `.github/workflows/dco.yml` requires a DCO sign-off on every commit, and `.github/workflows/harness-verify.yml` runs `Build/Scripts/verify-harness.sh`.
