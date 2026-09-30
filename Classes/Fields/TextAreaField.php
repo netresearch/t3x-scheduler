@@ -42,7 +42,9 @@ class TextAreaField extends AbstractField
         $tagBuilder->addAttribute('id', $this->getIdentifier());
         $tagBuilder->addAttribute('name', $this->getFieldName());
         $tagBuilder->addAttribute('class', 'form-control');
-        $tagBuilder->setContent($this->getValue());
+        // TagBuilder escapes attribute values but not the tag content.
+        $value = $this->getValue();
+        $tagBuilder->setContent(is_string($value) ? htmlspecialchars($value) : $value);
 
         return $tagBuilder->render();
     }

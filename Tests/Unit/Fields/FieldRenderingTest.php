@@ -64,6 +64,15 @@ final class FieldRenderingTest extends UnitTestCase
     }
 
     #[Test]
+    public function textAreaFieldEscapesMarkupInItsContent(): void
+    {
+        $html = (new TextAreaField('reportingMessage', 'Reporting message', '</textarea><b>"x" & y</b>'))->getFieldHtml();
+
+        self::assertStringContainsString('&lt;/textarea&gt;&lt;b&gt;&quot;x&quot; &amp; y&lt;/b&gt;', $html);
+        self::assertSame(1, substr_count($html, '</textarea>'));
+    }
+
+    #[Test]
     public function checkBoxFieldAlwaysEmitsAnUncheckedFallbackAndMarksCheckedState(): void
     {
         $unchecked = (new CheckBoxField('enableReporting', 'Enable reporting', false))->getFieldHtml();
