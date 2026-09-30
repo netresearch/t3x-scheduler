@@ -208,7 +208,7 @@ abstract class AbstractTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
         $content .= 'Task info' . $newLine;
         $content .= '----------------' . $newLine;
         $content .= 'Task ID: ' . $this->getTaskUid() . $newLine;
-        $content .= 'Task execuiton: ' . date('Y-m-d H:i:s') . $newLine;
+        $content .= 'Task execution: ' . date('Y-m-d H:i:s') . $newLine;
 
         return $content . ('Task error: ' . $message . $newLine);
     }

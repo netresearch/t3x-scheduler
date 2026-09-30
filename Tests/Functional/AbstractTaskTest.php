@@ -153,6 +153,7 @@ final class AbstractTaskTest extends FunctionalTestCase
         self::assertSame(['Nightly import failed'], $sentSubjects);
         self::assertStringContainsString('The execution fails without specific error.', $sentBodies[0]);
         self::assertStringContainsString('Task ID: 42', $sentBodies[0]);
+        self::assertMatchesRegularExpression('/^Task execution: \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\r$/m', $sentBodies[0]);
     }
 
     #[Test]
