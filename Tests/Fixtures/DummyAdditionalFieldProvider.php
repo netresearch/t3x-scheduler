@@ -22,7 +22,7 @@ use Netresearch\NrScheduler\Fields\TextField;
  * Concrete additional field provider used to exercise the abstract base provider.
  *
  * @author  Netresearch DTT GmbH <info@netresearch.de>
- * @license Netresearch https://www.netresearch.de
+ * @license GPL-3.0-or-later
  *
  * @see    https://www.netresearch.de
  *

@@ -27,7 +27,7 @@ use TYPO3\CMS\Scheduler\SchedulerManagementAction;
  * property directly therefore works on both supported core versions.
  *
  * @author  Netresearch DTT GmbH <info@netresearch.de>
- * @license Netresearch https://www.netresearch.de
+ * @license GPL-3.0-or-later
  *
  * @see    https://www.netresearch.de
  */

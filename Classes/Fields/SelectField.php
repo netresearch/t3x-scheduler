@@ -21,7 +21,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
  *
  * @author  Axel Seemann <axel.seemann@netresearch.de>
  * @author  Rico Sonntag <rico.sonntag@netresearch.de>
- * @license Netresearch https://www.netresearch.de
+ * @license GPL-3.0-or-later
  *
  * @see    https://www.netresearch.de
  */

@@ -28,7 +28,7 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  * which TYPO3 v14 ships as Fluid 5, so the produced markup is what pins that dependency.
  *
  * @author  Netresearch DTT GmbH <info@netresearch.de>
- * @license Netresearch https://www.netresearch.de
+ * @license GPL-3.0-or-later
  *
  * @see    https://www.netresearch.de
  */
