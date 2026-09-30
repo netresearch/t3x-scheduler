@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- SPDX-FileCopyrightText: Netresearch DTT GmbH -->
 [![Latest version](https://img.shields.io/github/v/release/netresearch/t3x-scheduler?sort=semver)](https://github.com/netresearch/t3x-scheduler/releases/latest)
 [![License](https://img.shields.io/github/license/netresearch/t3x-scheduler)](https://github.com/netresearch/t3x-scheduler/blob/main/LICENSE)
 [![CI](https://github.com/netresearch/t3x-scheduler/actions/workflows/ci.yml/badge.svg)](https://github.com/netresearch/t3x-scheduler/actions/workflows/ci.yml)
