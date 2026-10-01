@@ -3,6 +3,9 @@
 /*
  * This file is part of the package netresearch/nr-scheduler.
  *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ * SPDX-FileCopyrightText: Netresearch DTT GmbH
+ *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
@@ -25,7 +28,7 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  * which TYPO3 v14 ships as Fluid 5, so the produced markup is what pins that dependency.
  *
  * @author  Netresearch DTT GmbH <info@netresearch.de>
- * @license Netresearch https://www.netresearch.de
+ * @license GPL-3.0-or-later
  *
  * @see    https://www.netresearch.de
  */
@@ -58,6 +61,15 @@ final class FieldRenderingTest extends UnitTestCase
         self::assertStringContainsString('<textarea', $html);
         self::assertStringContainsString('Check the log.', $html);
         self::assertStringContainsString('</textarea>', $html);
+    }
+
+    #[Test]
+    public function textAreaFieldEscapesMarkupInItsContent(): void
+    {
+        $html = (new TextAreaField('reportingMessage', 'Reporting message', '</textarea><b>"x" & y</b>'))->getFieldHtml();
+
+        self::assertStringContainsString('&lt;/textarea&gt;&lt;b&gt;&quot;x&quot; &amp; y&lt;/b&gt;', $html);
+        self::assertSame(1, substr_count($html, '</textarea>'));
     }
 
     #[Test]

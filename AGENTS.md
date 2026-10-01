@@ -1,6 +1,8 @@
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- SPDX-FileCopyrightText: Netresearch DTT GmbH -->
 <!-- FOR AI AGENTS - Human readability is a side effect, not a goal -->
 <!-- Managed by agent: keep sections and order; edit content, not structure -->
-<!-- Last updated: 2026-08-19 | Last verified: 2026-08-19 -->
+<!-- Last updated: 2026-09-30 | Last verified: 2026-08-19 -->
 
 # AGENTS.md
 
@@ -83,7 +85,7 @@ Build/           → tool configs (phpstan, rector, fractor, phpunit XML) + Scri
 <!-- AGENTS-GENERATED:START ci-rules -->
 ## CI
 - `.github/workflows/ci.yml` calls reusable `netresearch/typo3-ci-workflows/.github/workflows/ci.yml@main` with matrix PHP 8.2-8.5 × TYPO3 `^13.4`/`^14.3`, functional tests on SQLite, fractor enabled.
-- Security/quality jobs (CodeQL, gitleaks, zizmor, fuzz, license-check) live in `.github/workflows/checks.yml` — do not duplicate them into ci.yml. See `.github/workflows/AGENTS.md`.
+- Security/quality jobs (Composer Audit + Opengrep, CodeQL, betterleaks, zizmor, fuzz, license-check) live in `.github/workflows/checks.yml` — do not duplicate them into ci.yml. See `.github/workflows/AGENTS.md`.
 <!-- AGENTS-GENERATED:END ci-rules -->
 
 ## Boundaries

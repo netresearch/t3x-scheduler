@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- SPDX-FileCopyrightText: Netresearch DTT GmbH -->
 # Security Policy
 
 ## Supported Versions
@@ -40,7 +42,11 @@ Use [GitHub Security Advisories](https://github.com/netresearch/t3x-scheduler/se
 
 ### Scope
 
-This policy covers the `scheduler` TYPO3 extension code. For vulnerabilities in dependencies or TYPO3 core, please report to the respective upstream projects.
+This policy covers the code of the `nr_scheduler` TYPO3 extension (Composer package `netresearch/nr-scheduler`). For vulnerabilities in dependencies or TYPO3 core, please report to the respective upstream projects.
+
+## Security Expectations
+
+What the extension protects and what it does not, its trust boundaries and the argument for how common weaknesses are countered are described in [docs/SECURITY-ASSURANCE.md](https://github.com/netresearch/t3x-scheduler/blob/main/docs/SECURITY-ASSURANCE.md).
 
 ## Safe Harbor
 

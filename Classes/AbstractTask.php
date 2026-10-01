@@ -3,6 +3,9 @@
 /*
  * This file is part of the package netresearch/nr-scheduler.
  *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ * SPDX-FileCopyrightText: Netresearch DTT GmbH
+ *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
@@ -28,7 +31,7 @@ use TYPO3\CMS\Core\Utility\MailUtility;
  *
  * @author  Axel Seemann <axel.seemann@netresearch.de>
  * @author  Rico Sonntag <rico.sonntag@netresearch.de>
- * @license Netresearch https://www.netresearch.de
+ * @license GPL-3.0-or-later
  *
  * @see    https://www.netresearch.de
  */
@@ -205,7 +208,7 @@ abstract class AbstractTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
         $content .= 'Task info' . $newLine;
         $content .= '----------------' . $newLine;
         $content .= 'Task ID: ' . $this->getTaskUid() . $newLine;
-        $content .= 'Task execuiton: ' . date('Y-m-d H:i:s') . $newLine;
+        $content .= 'Task execution: ' . date('Y-m-d H:i:s') . $newLine;
 
         return $content . ('Task error: ' . $message . $newLine);
     }

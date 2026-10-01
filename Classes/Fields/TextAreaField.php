@@ -3,6 +3,9 @@
 /*
  * This file is part of the package netresearch/nr-scheduler.
  *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ * SPDX-FileCopyrightText: Netresearch DTT GmbH
+ *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
@@ -18,7 +21,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
  *
  * @author  Axel Seemann <axel.seemann@netresearch.de>
  * @author  Rico Sonntag <rico.sonntag@netresearch.de>
- * @license Netresearch https://www.netresearch.de
+ * @license GPL-3.0-or-later
  *
  * @see    https://www.netresearch.de
  */
@@ -39,7 +42,9 @@ class TextAreaField extends AbstractField
         $tagBuilder->addAttribute('id', $this->getIdentifier());
         $tagBuilder->addAttribute('name', $this->getFieldName());
         $tagBuilder->addAttribute('class', 'form-control');
-        $tagBuilder->setContent($this->getValue());
+        // TagBuilder escapes attribute values but not the tag content.
+        $value = $this->getValue();
+        $tagBuilder->setContent(is_string($value) ? htmlspecialchars($value) : $value);
 
         return $tagBuilder->render();
     }

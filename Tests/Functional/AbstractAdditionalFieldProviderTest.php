@@ -3,6 +3,9 @@
 /*
  * This file is part of the package netresearch/nr-scheduler.
  *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ * SPDX-FileCopyrightText: Netresearch DTT GmbH
+ *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
@@ -30,7 +33,7 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  * equals()) and TYPO3 v13/v14 (native SchedulerManagementAction enum).
  *
  * @author  Netresearch DTT GmbH <info@netresearch.de>
- * @license Netresearch https://www.netresearch.de
+ * @license GPL-3.0-or-later
  *
  * @see    https://www.netresearch.de
  *

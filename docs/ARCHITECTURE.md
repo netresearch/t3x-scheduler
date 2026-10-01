@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- SPDX-FileCopyrightText: Netresearch DTT GmbH -->
 # Architecture
 
 Agent-facing component map of `netresearch/nr-scheduler` (extension key `nr_scheduler`). Facts verified against the tree on 2026-08-19; when in doubt, the code wins.

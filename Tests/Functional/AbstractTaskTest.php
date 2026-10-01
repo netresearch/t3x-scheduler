@@ -3,6 +3,9 @@
 /*
  * This file is part of the package netresearch/nr-scheduler.
  *
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ * SPDX-FileCopyrightText: Netresearch DTT GmbH
+ *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
  */
@@ -30,7 +33,7 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  * MailerInterface::send() in TYPO3 v14.
  *
  * @author  Netresearch DTT GmbH <info@netresearch.de>
- * @license Netresearch https://www.netresearch.de
+ * @license GPL-3.0-or-later
  *
  * @see    https://www.netresearch.de
  */
@@ -150,6 +153,7 @@ final class AbstractTaskTest extends FunctionalTestCase
         self::assertSame(['Nightly import failed'], $sentSubjects);
         self::assertStringContainsString('The execution fails without specific error.', $sentBodies[0]);
         self::assertStringContainsString('Task ID: 42', $sentBodies[0]);
+        self::assertMatchesRegularExpression('/^Task execution: \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\r$/m', $sentBodies[0]);
     }
 
     #[Test]
