@@ -46,7 +46,7 @@ This policy covers the code of the `nr_scheduler` TYPO3 extension (Composer pack
 
 ## Security Expectations
 
-What the extension protects and what it does not, its trust boundaries and the argument for how common weaknesses are countered are described in [docs/SECURITY-ASSURANCE.md](docs/SECURITY-ASSURANCE.md).
+What the extension protects and what it does not, its trust boundaries and the argument for how common weaknesses are countered are described in [docs/SECURITY-ASSURANCE.md](https://github.com/netresearch/t3x-scheduler/blob/main/docs/SECURITY-ASSURANCE.md).
 
 ## Safe Harbor
 
