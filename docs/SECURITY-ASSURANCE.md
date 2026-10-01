@@ -38,7 +38,7 @@ Users can expect:
 - Only TYPO3 administrators can create or change a task's settings, and only administrators or operators with shell access can run tasks; the extension widens neither (see Actors).
 - Values rendered into the scheduler form are HTML-escaped: attribute values by Fluid's `TagBuilder::addAttribute()` (`htmlspecialchars()` by default, `typo3fluid/fluid` 4.6.1 and 5.3.2), the content of a textarea by `TextAreaField::getFieldHtml()` (`Tests/Unit/Fields/FieldRenderingTest.php`, `textAreaFieldEscapesMarkupInItsContent`).
 - A task whose `environment` does not contain the current application context does nothing and reports success (`AbstractTaskTest::executeSkipsTheTaskAndReportsSuccessWhenTheContextDoesNotMatch`).
-- A failing task is not hidden by the reporting: the original exception is rethrown after the report is sent, and a mail transport failure becomes a `Netresearch\NrScheduler\Exception` that carries the original exception (`AbstractTaskTest::executeRethrowsTheOriginalExceptionWhenReportingIsDisabled`, `executeReportsTheOriginalExceptionMessageBeforeRethrowing`, `executeWrapsMailTransportFailuresIntoAnExtensionException`).
+- A failing task is not hidden by the reporting: the task's exception is rethrown after the report is sent. A mail transport failure becomes a `Netresearch\NrScheduler\Exception` that carries the transport exception; when the task had failed as well, that exception replaces the task's, which is then not attached (`Classes/AbstractTask.php`, `execute()` and `sendReporting()`; `AbstractTaskTest::executeRethrowsTheOriginalExceptionWhenReportingIsDisabled`, `executeReportsTheOriginalExceptionMessageBeforeRethrowing`, `executeWrapsMailTransportFailuresIntoAnExtensionException`).
 
 Users cannot expect:
 
@@ -62,7 +62,7 @@ Threats considered: a lower-privileged backend user or a visitor changing a task
 ## Secure design principles applied
 
 - **Least privilege and no new entry points.** The extension registers no route, middleware, plugin, command or table (`Configuration/Services.yaml` only enables autowiring), so it adds no attack surface beyond the administrator-only Scheduler module it extends.
-- **Fail visibly.** Reporting never swallows a failure: `execute()` rethrows the task's exception, and a failed mail delivery raises `Netresearch\NrScheduler\Exception` with the cause attached.
+- **Fail visibly.** Reporting does not turn a failure into a success: `execute()` rethrows the task's exception, and a failed mail delivery raises `Netresearch\NrScheduler\Exception` with the transport error attached, in place of the task's exception when both fail.
 - **Escape on output.** Form HTML is built with `TagBuilder` rather than string concatenation; the only hand-written markup is the hidden fallback input in `CheckBoxField`, whose name comes from the developer's field identifier, not from stored data. Option labels of `SelectField` and `MultiSelectField` are set as tag content without escaping; they come from the developer's field configuration, not from stored data.
 - **Strict typing.** Every PHP file under `Classes/` and `Tests/` declares `strict_types=1`, properties are typed, and PHPStan runs at level 6 with strict and deprecation rules (`Build/phpstan.neon`).
 
