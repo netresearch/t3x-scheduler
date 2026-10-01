@@ -11,7 +11,7 @@ A library of base classes for TYPO3 scheduler tasks. It has no controllers, rout
 
 - five settings: `enableReporting`, `reportingEmails`, `reportingSubject`, `reportingMessage` and `environment` (`AbstractTask.php`);
 - a check that skips the run when the current application context is not listed in `environment` (`AbstractTask::isRunnableInContext()`);
-- a plain-text mail to `reportingEmails` when `executeTask()` returns `false` or throws (`AbstractTask::sendReporting()`);
+- a plain-text mail to `reportingEmails` when `executeTask()` returns `false` or throws an `\Exception` (`AbstractTask::sendReporting()`; an `\Error` such as a `TypeError` is not caught by `execute()` and sends no mail);
 - form field classes for the scheduler backend form (`Classes/Fields/`) and a validator base class (`Classes/Validators/AbstractValidator.php`).
 
 ## Actors
@@ -38,7 +38,7 @@ Users can expect:
 - Only TYPO3 administrators can create or change a task's settings, and only administrators or operators with shell access can run tasks; the extension widens neither (see Actors).
 - Values rendered into the scheduler form are HTML-escaped: attribute values by Fluid's `TagBuilder::addAttribute()` (`htmlspecialchars()` by default, `typo3fluid/fluid` 4.6.1 and 5.3.2), the content of a textarea by `TextAreaField::getFieldHtml()` (`Tests/Unit/Fields/FieldRenderingTest.php`, `textAreaFieldEscapesMarkupInItsContent`).
 - A task whose `environment` does not contain the current application context does nothing and reports success (`AbstractTaskTest::executeSkipsTheTaskAndReportsSuccessWhenTheContextDoesNotMatch`).
-- A failing task is not hidden by the reporting: the task's exception is rethrown after the report is sent. A mail transport failure becomes a `Netresearch\NrScheduler\Exception` that carries the transport exception; when the task had failed as well, that exception replaces the task's, which is then not attached (`Classes/AbstractTask.php`, `execute()` and `sendReporting()`; `AbstractTaskTest::executeRethrowsTheOriginalExceptionWhenReportingIsDisabled`, `executeReportsTheOriginalExceptionMessageBeforeRethrowing`, `executeWrapsMailTransportFailuresIntoAnExtensionException`).
+- A failing task is not hidden by the reporting: an `\Exception` from the task is rethrown after the report is sent, and an `\Error` passes through `execute()` unreported. A mail transport failure becomes a `Netresearch\NrScheduler\Exception` that carries the transport exception; when the task had failed as well, that exception replaces the task's, which is then not attached (`Classes/AbstractTask.php`, `execute()` and `sendReporting()`; `AbstractTaskTest::executeRethrowsTheOriginalExceptionWhenReportingIsDisabled`, `executeReportsTheOriginalExceptionMessageBeforeRethrowing`, `executeWrapsMailTransportFailuresIntoAnExtensionException`).
 
 Users cannot expect:
 
