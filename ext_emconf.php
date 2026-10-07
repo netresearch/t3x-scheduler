@@ -11,8 +11,8 @@
  */
 
 $EM_CONF['nr_scheduler'] = [
-    'title'          => 'Netresearch - TYPO3 scheduler',
-    'description'    => 'Extends the TYPO3 scheduler extension with some functions.',
+    'title'          => 'Scheduler Extensions',
+    'description'    => 'Extends the TYPO3 scheduler extension with additional functions.',
     'category'       => 'plugin',
     'author'         => 'Rico Sonntag',
     'author_email'   => 'rico.sonntag@netresearch.de',

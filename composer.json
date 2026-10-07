@@ -1,7 +1,7 @@
 {
     "name": "netresearch/nr-scheduler",
     "type": "typo3-cms-extension",
-    "description": "Extends the TYPO3 scheduler extension with some functions.",
+    "description": "Scheduler Extensions - Extends the TYPO3 scheduler extension with additional functions.",
     "license": [
         "GPL-3.0-or-later"
     ],

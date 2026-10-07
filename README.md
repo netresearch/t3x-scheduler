@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/github/license/netresearch/t3x-scheduler)](https://github.com/netresearch/t3x-scheduler/blob/main/LICENSE)
 [![CI](https://github.com/netresearch/t3x-scheduler/actions/workflows/ci.yml/badge.svg)](https://github.com/netresearch/t3x-scheduler/actions/workflows/ci.yml)
 
-# TYPO3 Extension nr-scheduler
+# Scheduler Extensions for TYPO3
 
 This extension extends the TYPO3 scheduler extension with some functions.
 
