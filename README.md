@@ -81,4 +81,6 @@ Checks that the workflows in `.github/workflows/` run on pull requests:
 - `.github/workflows/dco.yml` requires a DCO sign-off on every commit of the pull request except merge commits and commits by `dependabot[bot]`, `renovate[bot]` and `github-actions[bot]`, and `.github/workflows/harness-verify.yml` runs `Build/Scripts/verify-harness.sh`.
 - `.github/workflows/labeler.yml` labels the pull request by the paths it changes; `.github/workflows/community.yml` greets a contributor on their first pull request; `.github/workflows/auto-merge-deps.yml` approves and enables auto-merge for Dependabot and Renovate pull requests that carry neither the `deps-no-automerge` nor the `deps-major` label, and is skipped for all others.
 
+- `.github/workflows/check-template-drift.yml`: Template drift fails when a file governed by the `typo3-extension` template of `netresearch/.github` differs from it; `.github/template.yaml` records the template and the intentional drift (`ci.yml` and `release.yml`).
+
 The reusable workflows also run helper jobs that decide which of their jobs apply, for example `Preflight (event gate)`, `Detect Documentation` and CodeQL's `Prepare languages`.

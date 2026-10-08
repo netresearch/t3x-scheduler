@@ -13,8 +13,9 @@ Every workflow here is a thin caller of a centralized reusable workflow in `netr
 ## Key Files
 | File | Purpose |
 |------|---------|
-| `ci.yml` | Extension test matrix (PHP 8.2-8.5 × TYPO3 ^13.4/^14.3, SQLite functionals, fractor) — the ONE per-extension file, intentional drift |
+| `ci.yml` | Extension test matrix (PHP 8.2-8.5 × TYPO3 ^13.4/^14.3, SQLite functionals, fractor) — a per-extension file, intentional drift (as is `release.yml`) |
 | `checks.yml` | Security/quality jobs + `All security checks` gate — byte-identical and drift-enforced across all typo3-extensions |
+| `check-template-drift.yml` | Fails when a file governed by the `typo3-extension` template of `netresearch/.github` differs from it; `.github/template.yaml` lists `ci.yml` and `release.yml` as intentional drift |
 | `harness-verify.yml` | Agent-harness consistency check via `Build/Scripts/verify-harness.sh` |
 | `release.yml` / `republish.yml` | TER/Packagist release and re-publish of a tag |
 | `dco.yml`, `labeler.yml`, `community.yml`, `auto-merge-deps.yml` | DCO check, PR labeling, stale/lock/greetings, dependency auto-merge |
@@ -36,7 +37,7 @@ There is no local runner for the reusable-workflow jobs themselves — push to a
 
 <!-- AGENTS-GENERATED:START code-style -->
 ## Workflow conventions
-- **checks.yml is drift-enforced**: keep it byte-identical to the other typo3-extension repos; extension-specific settings belong in `ci.yml` only.
+- **checks.yml is drift-enforced**: keep it byte-identical to the other typo3-extension repos; extension-specific settings belong in `ci.yml` and `release.yml` only.
 - **Any job added to checks.yml MUST also be added to `gate.needs`** — the `All security checks` gate is the only context rulesets require; a job missing there fails silently.
 - Do not require pull-request-only jobs (`dependency-review`, `pr-quality`) or app-posted checks (CodeQL, zizmor, betterleaks, Opengrep) in rulesets — they never materialize on `merge_group` refs and stall the queue. Require the gate instead.
 - `permissions:` blocks are minimal and per job; never `write-all`.
