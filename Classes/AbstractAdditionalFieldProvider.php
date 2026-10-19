@@ -188,7 +188,7 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
                 $value    = null;
                 $fieldKey = $this->getFieldKey($key);
 
-                if (isset($submittedData[$fieldKey])) {
+                if (isset($submittedData[$fieldKey]) && is_scalar($submittedData[$fieldKey])) {
                     $value = trim((string) $submittedData[$fieldKey]);
                 }
 
@@ -434,7 +434,20 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
         }
 
         if (is_array($value)) {
-            return $value;
+            $values = [];
+
+            foreach ($value as $key => $item) {
+                if (!is_int($item) && !is_string($item)) {
+                    throw new InvalidArgumentException(
+                        sprintf('The value of field "%s" must hold integers or strings only, %s given.', $name, get_debug_type($item)),
+                        1792371355,
+                    );
+                }
+
+                $values[$key] = $item;
+            }
+
+            return $values;
         }
 
         throw new InvalidArgumentException(

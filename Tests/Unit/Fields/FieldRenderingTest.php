@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Netresearch\NrScheduler\Tests\Unit\Fields;
 
+use Netresearch\NrScheduler\Fields\AbstractField;
 use Netresearch\NrScheduler\Fields\CheckBoxField;
 use Netresearch\NrScheduler\Fields\MultiSelectField;
 use Netresearch\NrScheduler\Fields\PasswordField;
@@ -42,6 +43,28 @@ final class FieldRenderingTest extends UnitTestCase
         self::assertStringContainsString('id="reportingEmails"', $html);
         self::assertStringContainsString('name="tx_scheduler[reportingEmails]"', $html);
         self::assertStringContainsString('value="ops@example.org"', $html);
+    }
+
+    #[Test]
+    public function textFieldRendersAnIntegerValueAsItsString(): void
+    {
+        $html = (new TextField('retries', 'Retries', 42))->getFieldHtml();
+
+        self::assertStringContainsString('value="42"', $html);
+    }
+
+    #[Test]
+    public function aFieldWithoutATypeReportsAnEmptyType(): void
+    {
+        $field = new class ('custom', 'Custom') extends AbstractField {
+            public function getFieldHtml(): string
+            {
+                return '';
+            }
+        };
+
+        // Reading the uninitialized property was an Error before.
+        self::assertSame('', $field->getType());
     }
 
     #[Test]
