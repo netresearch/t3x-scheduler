@@ -14,8 +14,6 @@ declare(strict_types=1);
 
 namespace Netresearch\NrScheduler;
 
-use function in_array;
-
 use Netresearch\NrScheduler\Traits\FlashMessageTrait;
 use Netresearch\NrScheduler\Traits\TranslationTrait;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -25,6 +23,8 @@ use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MailUtility;
+
+use function in_array;
 
 /**
  * Abstract scheduler task.

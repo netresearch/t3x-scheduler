@@ -49,8 +49,8 @@ class CheckBoxField extends AbstractField
         }
 
         return <<<HTML
-<input type="hidden" name="{$this->getFieldName()}" value="0">
-{$tagBuilder->render()}
-HTML;
+            <input type="hidden" name="{$this->getFieldName()}" value="0">
+            {$tagBuilder->render()}
+            HTML;
     }
 }
