@@ -53,14 +53,17 @@ final class AbstractTaskTest extends FunctionalTestCase
         'netresearch/nr-scheduler',
     ];
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // Pin the sender so the generated reporting mail is deterministic.
-        $GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromAddress'] = 'typo3@example.org';
-        $GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromName']    = 'TYPO3 Scheduler';
-    }
+    /**
+     * Pins the sender so the generated reporting mail is deterministic.
+     *
+     * @var array<string, mixed>
+     */
+    protected array $configurationToUseInTestInstance = [
+        'MAIL' => [
+            'defaultMailFromAddress' => 'typo3@example.org',
+            'defaultMailFromName'    => 'TYPO3 Scheduler',
+        ],
+    ];
 
     #[Test]
     public function executeRunsTheTaskWhenNoEnvironmentIsConfigured(): void

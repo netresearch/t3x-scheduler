@@ -64,7 +64,7 @@ Classes/
 - Namespace `Netresearch\NrScheduler\` (PSR-4 from `Classes/`)
 - DI: constructor injection, autowired via `Configuration/Services.yaml`; avoid `GeneralUtility::makeInstance()` in new code
 - File header: package/license docblock as in every existing file
-- PHPStan level 6 with strict rules + deprecation rules; baseline in `Build/phpstan-baseline.neon` — do not grow it, fix findings instead
+- PHPStan level 10 (shared `netresearch/typo3-ci-workflows` config) with strict rules + deprecation rules; baseline in `Build/phpstan-baseline.neon` — do not grow it, fix findings instead
 <!-- AGENTS-GENERATED:END code-style -->
 
 <!-- AGENTS-GENERATED:START security -->

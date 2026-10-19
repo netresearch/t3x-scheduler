@@ -59,7 +59,7 @@ class MultiSelectField extends SelectField
             $selectedValue = $this->getValue();
 
             if (is_array($selectedValue)) {
-                if (in_array($value, $this->getValue(), true)) {
+                if (in_array($value, $selectedValue, true)) {
                     $optionTag->addAttribute('selected', 'selected');
                 }
             } elseif ($value === $this->getValue()) {

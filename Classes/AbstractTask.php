@@ -141,15 +141,24 @@ abstract class AbstractTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
      *
      * @return void
      *
+     * @throws Exception
      * @throws TransportExceptionInterface
      */
     private function sendEmail(array $recipients, string $email): void
     {
+        $systemFrom = MailUtility::getSystemFrom();
+
+        // MailMessage::setFrom() failed before on NULL as well; sendReporting()
+        // wraps both into an Exception.
+        if ($systemFrom === null) {
+            throw new Exception('No system sender address is configured in $GLOBALS[\'TYPO3_CONF_VARS\'][\'MAIL\'][\'defaultMailFromAddress\'].', 1792371357);
+        }
+
         /** @var MailMessage $mailMessage */
         $mailMessage = GeneralUtility::makeInstance(MailMessage::class);
 
         $mailMessage
-            ->setFrom(MailUtility::getSystemFrom())
+            ->setFrom($systemFrom)
             ->setTo($recipients)
             ->setSubject($this->getReportingEmailSubject())
             ->text($email);
