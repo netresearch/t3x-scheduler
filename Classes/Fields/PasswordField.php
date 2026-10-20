@@ -42,7 +42,7 @@ class PasswordField extends AbstractField
         $tagBuilder->addAttribute('name', $this->getFieldName());
         $tagBuilder->addAttribute('type', 'password');
         $tagBuilder->addAttribute('class', 'form-control');
-        $tagBuilder->addAttribute('value', $this->getValue());
+        $tagBuilder->addAttribute('value', $this->getAttributeValue());
 
         return $tagBuilder->render();
     }

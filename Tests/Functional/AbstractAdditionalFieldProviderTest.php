@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace Netresearch\NrScheduler\Tests\Functional;
 
+use InvalidArgumentException;
 use Netresearch\NrScheduler\Tests\Fixtures\DummyAdditionalFieldProvider;
 use Netresearch\NrScheduler\Tests\Fixtures\DummyTask;
 use Netresearch\NrScheduler\Tests\Fixtures\RejectingValidator;
@@ -233,6 +234,41 @@ final class AbstractAdditionalFieldProviderTest extends FunctionalTestCase
                 $submittedData,
                 $this->createSchedulerModule(SchedulerManagementAction::ADD),
             ),
+        );
+    }
+
+    #[Test]
+    public function validateAdditionalFieldsPassesNoValueToTheValidatorForANonScalarSubmission(): void
+    {
+        DummyAdditionalFieldProvider::$demoTextValidators = [RejectingValidator::class];
+
+        $subject       = new DummyAdditionalFieldProvider();
+        $submittedData = ['demoText' => ['anything']];
+
+        // An array was cast to the string "Array" before.
+        $this->expectOutputRegex('/Field "demoText" rejected value ""\./');
+
+        self::assertFalse(
+            $subject->validateAdditionalFields(
+                $submittedData,
+                $this->createSchedulerModule(SchedulerManagementAction::ADD),
+            ),
+        );
+    }
+
+    #[Test]
+    public function getAdditionalFieldsRejectsAnArrayValueWithItemsOtherThanIntegersOrStrings(): void
+    {
+        $subject  = new DummyAdditionalFieldProvider();
+        $taskInfo = ['demoSelect' => [1.5]];
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionCode(1792371355);
+
+        $subject->getAdditionalFields(
+            $taskInfo,
+            null,
+            $this->createSchedulerModule(SchedulerManagementAction::ADD),
         );
     }
 

@@ -119,7 +119,7 @@ Build/           → tool configs (phpstan, rector, fractor, phpunit XML) + Scri
 ## Codebase State
 <!-- AGENTS-GENERATED:START codebase-state -->
 - `Classes/AbstractAdditionalFieldProvider.php` is `@deprecated` since 2.0.0: it wraps `\TYPO3\CMS\Scheduler\AbstractAdditionalFieldProvider`, which TYPO3 removes in v15. Migrate consuming tasks to native task types with TCA additional fields.
-- Version source of truth: `ext_emconf.php`; PHPStan runs at level 6 with baseline `Build/phpstan-baseline.neon`.
+- Version source of truth: `ext_emconf.php`; PHPStan runs at level 10 (shared config of `netresearch/typo3-ci-workflows`) with baseline `Build/phpstan-baseline.neon`.
 <!-- AGENTS-GENERATED:END codebase-state -->
 
 ## Scoped AGENTS.md (MUST read when working in these directories)

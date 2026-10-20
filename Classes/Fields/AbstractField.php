@@ -14,6 +14,10 @@ declare(strict_types=1);
 
 namespace Netresearch\NrScheduler\Fields;
 
+use Stringable;
+use UnexpectedValueException;
+use UnitEnum;
+
 /**
  * Abstract field.
  *
@@ -28,7 +32,7 @@ abstract class AbstractField
     /**
      * @var string
      */
-    protected string $type;
+    protected string $type = '';
 
     /**
      * @var string
@@ -129,6 +133,34 @@ abstract class AbstractField
         $this->value = $value;
 
         return $this;
+    }
+
+    /**
+     * Returns the value in a form TagBuilder::addAttribute() accepts.
+     *
+     * Numbers and Stringable objects become their string, the same cast the
+     * TagBuilder applies; any other object failed there before as an Error.
+     *
+     * @return bool|string|int[]|string[]|UnitEnum|null
+     *
+     * @throws UnexpectedValueException
+     */
+    protected function getAttributeValue(): array|bool|string|UnitEnum|null
+    {
+        $value = $this->getValue();
+
+        if (is_int($value) || is_float($value) || $value instanceof Stringable) {
+            return (string) $value;
+        }
+
+        if (is_object($value) && !$value instanceof UnitEnum) {
+            throw new UnexpectedValueException(
+                sprintf('The value of field "%s" is a %s, which cannot be rendered as an attribute.', $this->getIdentifier(), get_debug_type($value)),
+                1792371358,
+            );
+        }
+
+        return $value;
     }
 
     /**

@@ -14,8 +14,6 @@ declare(strict_types=1);
 
 namespace Netresearch\NrScheduler;
 
-use function in_array;
-
 use Netresearch\NrScheduler\Traits\FlashMessageTrait;
 use Netresearch\NrScheduler\Traits\TranslationTrait;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -25,6 +23,8 @@ use TYPO3\CMS\Core\Mail\MailerInterface;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MailUtility;
+
+use function in_array;
 
 /**
  * Abstract scheduler task.
@@ -141,15 +141,24 @@ abstract class AbstractTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
      *
      * @return void
      *
+     * @throws Exception
      * @throws TransportExceptionInterface
      */
     private function sendEmail(array $recipients, string $email): void
     {
+        $systemFrom = MailUtility::getSystemFrom();
+
+        // MailMessage::setFrom() failed before on NULL as well; sendReporting()
+        // wraps both into an Exception.
+        if ($systemFrom === null) {
+            throw new Exception('No system sender address is configured in $GLOBALS[\'TYPO3_CONF_VARS\'][\'MAIL\'][\'defaultMailFromAddress\'].', 1792371357);
+        }
+
         /** @var MailMessage $mailMessage */
         $mailMessage = GeneralUtility::makeInstance(MailMessage::class);
 
         $mailMessage
-            ->setFrom(MailUtility::getSystemFrom())
+            ->setFrom($systemFrom)
             ->setTo($recipients)
             ->setSubject($this->getReportingEmailSubject())
             ->text($email);

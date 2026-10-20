@@ -14,10 +14,10 @@ declare(strict_types=1);
 
 namespace Netresearch\NrScheduler\Fields;
 
+use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
+
 use function in_array;
 use function is_array;
-
-use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 /**
  * MultiSelect field.
@@ -59,7 +59,7 @@ class MultiSelectField extends SelectField
             $selectedValue = $this->getValue();
 
             if (is_array($selectedValue)) {
-                if (in_array($value, $this->getValue(), true)) {
+                if (in_array($value, $selectedValue, true)) {
                     $optionTag->addAttribute('selected', 'selected');
                 }
             } elseif ($value === $this->getValue()) {

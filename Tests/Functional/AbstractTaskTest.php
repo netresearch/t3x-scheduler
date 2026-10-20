@@ -24,6 +24,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\RawMessage;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Mail\MailerInterface;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -53,13 +54,27 @@ final class AbstractTaskTest extends FunctionalTestCase
         'netresearch/nr-scheduler',
     ];
 
-    protected function setUp(): void
-    {
-        parent::setUp();
+    /**
+     * Pins the sender so the generated reporting mail is deterministic.
+     *
+     * @var array<string, mixed>
+     */
+    protected array $configurationToUseInTestInstance = [
+        'MAIL' => [
+            'defaultMailFromAddress' => 'typo3@example.org',
+            'defaultMailFromName'    => 'TYPO3 Scheduler',
+        ],
+    ];
 
-        // Pin the sender so the generated reporting mail is deterministic.
-        $GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromAddress'] = 'typo3@example.org';
-        $GLOBALS['TYPO3_CONF_VARS']['MAIL']['defaultMailFromName']    = 'TYPO3 Scheduler';
+    #[Test]
+    public function addMessageAcceptsTheIntegerValueOfASeverity(): void
+    {
+        $task = new DummyTask();
+
+        // Flash messages are echoed on CLI by FlashMessageTrait; an integer was a TypeError before.
+        $this->expectOutputRegex('/^WARNING: Integer severity$/m');
+
+        $task->addMessage('Integer severity', ContextualFeedbackSeverity::WARNING->value);
     }
 
     #[Test]

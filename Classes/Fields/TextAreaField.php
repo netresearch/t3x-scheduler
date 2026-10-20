@@ -15,6 +15,7 @@ declare(strict_types=1);
 namespace Netresearch\NrScheduler\Fields;
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
+use UnexpectedValueException;
 
 /**
  * Textarea field.
@@ -44,7 +45,16 @@ class TextAreaField extends AbstractField
         $tagBuilder->addAttribute('class', 'form-control');
         // TagBuilder escapes attribute values but not the tag content.
         $value = $this->getValue();
-        $tagBuilder->setContent(is_string($value) ? htmlspecialchars($value) : $value);
+
+        // Anything but a string or NULL failed before as a TypeError in setContent().
+        if ($value !== null && !is_string($value)) {
+            throw new UnexpectedValueException(
+                sprintf('The value of field "%s" must be a string or null, %s given.', $this->getIdentifier(), get_debug_type($value)),
+                1792371359,
+            );
+        }
+
+        $tagBuilder->setContent($value === null ? null : htmlspecialchars($value));
 
         return $tagBuilder->render();
     }

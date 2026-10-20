@@ -44,13 +44,13 @@ class CheckBoxField extends AbstractField
         $tagBuilder->addAttribute('class', 'form-check-input');
         $tagBuilder->addAttribute('value', '1');
 
-        if ($this->getValue()) {
+        if ((bool) $this->getValue()) {
             $tagBuilder->addAttribute('checked', 'checked');
         }
 
         return <<<HTML
-<input type="hidden" name="{$this->getFieldName()}" value="0">
-{$tagBuilder->render()}
-HTML;
+            <input type="hidden" name="{$this->getFieldName()}" value="0">
+            {$tagBuilder->render()}
+            HTML;
     }
 }

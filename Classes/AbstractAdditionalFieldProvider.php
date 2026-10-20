@@ -14,6 +14,8 @@ declare(strict_types=1);
 
 namespace Netresearch\NrScheduler;
 
+use BadMethodCallException;
+use InvalidArgumentException;
 use Netresearch\NrScheduler\Fields\AbstractField;
 use Netresearch\NrScheduler\Fields\CheckBoxField;
 use Netresearch\NrScheduler\Fields\SelectField;
@@ -134,11 +136,13 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
             /** @var class-string<AbstractField> $fieldClass */
             $fieldClass = $config['type'];
 
+            $translationFile = $this->getTranslationFile($key, $config);
+
             /** @var AbstractField $field */
             $field = GeneralUtility::makeInstance(
                 $fieldClass,
                 $identifier,
-                $this->getLabel($key, $config['translationFile']),
+                $this->getLabel($key, $translationFile),
             );
 
             $field->setValue(
@@ -148,14 +152,14 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
             $field->setDescription(
                 $this->getLabel(
                     $key . '.description',
-                    $config['translationFile'],
+                    $translationFile,
                     [],
                     true,
                 ),
             );
 
             if ($field instanceof SelectField) {
-                $field->setOptions($config['options']);
+                $field->setOptions($this->getSelectOptions($key, $config));
             }
 
             $additionalFields[$identifier] = $field->getAdditionalField();
@@ -175,7 +179,8 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
     public function validateAdditionalFields(array &$submittedData, SchedulerModuleController $schedulerModule): bool
     {
         foreach ($this->definedFields as $key => $field) {
-            if ($field['validators'] === []) {
+            // A non-array value was skipped by foreach before, with a warning.
+            if (!is_array($field['validators']) || $field['validators'] === []) {
                 continue;
             }
 
@@ -183,7 +188,7 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
                 $value    = null;
                 $fieldKey = $this->getFieldKey($key);
 
-                if (isset($submittedData[$fieldKey])) {
+                if (isset($submittedData[$fieldKey]) && is_scalar($submittedData[$fieldKey])) {
                     $value = trim((string) $submittedData[$fieldKey]);
                 }
 
@@ -226,10 +231,96 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
     {
         /** @var \Netresearch\NrScheduler\AbstractTask $task */
         $task->enableReporting  = (bool) $submittedData['enableReporting'];
-        $task->reportingEmails  = $submittedData['reportingEmails'];
-        $task->reportingSubject = $submittedData['reportingSubject'];
-        $task->reportingMessage = $submittedData['reportingMessage'];
-        $task->environment      = $submittedData['environment'];
+        $task->reportingEmails  = $this->getSubmittedString($submittedData, 'reportingEmails');
+        $task->reportingSubject = $this->getSubmittedString($submittedData, 'reportingSubject');
+        $task->reportingMessage = $this->getSubmittedString($submittedData, 'reportingMessage');
+        $task->environment      = $this->getSubmittedString($submittedData, 'environment');
+    }
+
+    /**
+     * Returns a submitted value that is assigned to a string property of the task.
+     *
+     * Anything but a string failed before as a TypeError on the typed property.
+     *
+     * @param array<mixed> $submittedData Data submitted by the form
+     * @param string       $name          Field name
+     *
+     * @return string
+     *
+     * @throws InvalidArgumentException
+     */
+    private function getSubmittedString(array $submittedData, string $name): string
+    {
+        $value = $submittedData[$name] ?? null;
+
+        if (!is_string($value)) {
+            throw new InvalidArgumentException(
+                sprintf('The submitted value of field "%s" must be a string, %s given.', $name, get_debug_type($value)),
+                1792371351,
+            );
+        }
+
+        return $value;
+    }
+
+    /**
+     * Returns the translation file of a field configuration.
+     *
+     * Anything but a string failed before as a TypeError in getLabel().
+     *
+     * @param string                                  $name   Field name
+     * @param array<string, bool|int|string|string[]> $config Field configuration
+     *
+     * @return string
+     *
+     * @throws InvalidArgumentException
+     */
+    private function getTranslationFile(string $name, array $config): string
+    {
+        $translationFile = $config['translationFile'] ?? null;
+
+        if (!is_string($translationFile)) {
+            throw new InvalidArgumentException(
+                sprintf('The "translationFile" of field "%s" must be a string, %s given.', $name, get_debug_type($translationFile)),
+                1792371352,
+            );
+        }
+
+        return $translationFile;
+    }
+
+    /**
+     * Returns the options of a select field configuration.
+     *
+     * A non-array failed before as a TypeError in SelectField::setOptions().
+     * Integer keys stay integer keys, as PHP stores numeric string keys as
+     * integers.
+     *
+     * @param string                                  $name   Field name
+     * @param array<string, bool|int|string|string[]> $config Field configuration
+     *
+     * @return array<string, string>
+     *
+     * @throws InvalidArgumentException
+     */
+    private function getSelectOptions(string $name, array $config): array
+    {
+        $configuredOptions = $config['options'] ?? null;
+
+        if (!is_array($configuredOptions)) {
+            throw new InvalidArgumentException(
+                sprintf('The "options" of field "%s" must be an array, %s given.', $name, get_debug_type($configuredOptions)),
+                1792371353,
+            );
+        }
+
+        $options = [];
+
+        foreach ($configuredOptions as $value => $label) {
+            $options[(string) $value] = $label;
+        }
+
+        return $options;
     }
 
     /**
@@ -299,7 +390,17 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
                     $getter = 'get' . ucfirst($name);
 
                     if (method_exists($task, $getter)) {
-                        $taskInfo[$fieldIdentifier] = call_user_func([$task, $getter]);
+                        $callable = [$task, $getter];
+
+                        // A getter that is not public failed before in call_user_func().
+                        if (!is_callable($callable)) {
+                            throw new BadMethodCallException(
+                                sprintf('The getter %s::%s() is not callable.', $task::class, $getter),
+                                1792371354,
+                            );
+                        }
+
+                        $taskInfo[$fieldIdentifier] = $callable();
                     } elseif (property_exists($task, $name)) {
                         /** @var mixed $value */
                         $value                      = $task->{$name};
@@ -311,7 +412,48 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
             }
         }
 
-        return $taskInfo[$fieldIdentifier];
+        return $this->narrowFieldValue($name, $taskInfo[$fieldIdentifier]);
+    }
+
+    /**
+     * Narrows a field value to the types a field accepts.
+     *
+     * A resource failed before as a TypeError in AbstractField::setValue().
+     *
+     * @param string $name  Field name
+     * @param mixed  $value Field value
+     *
+     * @return bool|int|float|string|int[]|string[]|object|null
+     *
+     * @throws InvalidArgumentException
+     */
+    private function narrowFieldValue(string $name, mixed $value): array|bool|int|float|string|object|null
+    {
+        if ($value === null || is_scalar($value) || is_object($value)) {
+            return $value;
+        }
+
+        if (is_array($value)) {
+            $values = [];
+
+            foreach ($value as $key => $item) {
+                if (!is_int($item) && !is_string($item)) {
+                    throw new InvalidArgumentException(
+                        sprintf('The value of field "%s" must hold integers or strings only, %s given.', $name, get_debug_type($item)),
+                        1792371355,
+                    );
+                }
+
+                $values[$key] = $item;
+            }
+
+            return $values;
+        }
+
+        throw new InvalidArgumentException(
+            sprintf('The value of field "%s" has the unsupported type %s.', $name, get_debug_type($value)),
+            1792371356,
+        );
     }
 
     /**
@@ -333,6 +475,9 @@ abstract class AbstractAdditionalFieldProvider extends SchedulerAbstractAddition
      */
     protected function getLanguageService(): LanguageService
     {
-        return $GLOBALS['LANG'];
+        $languageService = $GLOBALS['LANG'];
+        assert($languageService instanceof LanguageService);
+
+        return $languageService;
     }
 }

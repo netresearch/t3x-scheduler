@@ -43,6 +43,8 @@ final class RejectingValidator extends AbstractValidator
      */
     public function getErrorMessage(): string
     {
-        return 'Field "' . $this->fieldName . '" rejected value "' . $this->value . '".';
+        $value = is_string($this->value) ? $this->value : '';
+
+        return 'Field "' . $this->fieldName . '" rejected value "' . $value . '".';
     }
 }
