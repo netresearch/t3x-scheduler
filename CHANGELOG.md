@@ -4,16 +4,16 @@
 
 ## BUGFIXES
 
-- Escape the content of `TextAreaField`; a stored value such as `</textarea><b>` closed the textarea and rendered as markup in the scheduler form
-- `FlashMessageTrait::addMessage()` accepts the integer severity its signature declares; it is converted to `ContextualFeedbackSeverity` (an integer outside the enum throws a `ValueError`) instead of raising a `TypeError`
-- A non-scalar submitted value (an array from a multi-select field) reaches the field validator as `null` instead of the string "Array" with a PHP warning
-- `getFieldValue()` throws an `InvalidArgumentException` naming the field when an array value holds anything but integers or strings
-- `AbstractField::getType()` returns `''` for a field subclass that sets no type instead of raising an `Error`
-- Spell "Task execution" correctly in the failure report mail
+- Escape the content of `TextAreaField`; a stored value such as `</textarea><b>` closed the textarea and rendered as markup in the scheduler form (#59)
+- `FlashMessageTrait::addMessage()` accepts the integer severity its signature declares; it is converted to `ContextualFeedbackSeverity` (an integer outside the enum throws a `ValueError`) instead of raising a `TypeError` (#64)
+- A non-scalar submitted value (an array from a multi-select field) reaches the field validator as `null` instead of the string "Array" with a PHP warning (#64)
+- `getFieldValue()` throws an `InvalidArgumentException` naming the field when an array value holds anything but integers or strings (#64)
+- `AbstractField::getType()` returns `''` for a field subclass that sets no type instead of raising an `Error` (#64)
+- Spell "Task execution" correctly in the failure report mail (#59)
 
 ## MISC
 
-- Use one extension title in `ext_emconf.php` and `composer.json`, so the TYPO3 Reports "Composer Manifest" check no longer reports a description mismatch
+- Use one extension title in `ext_emconf.php` and `composer.json`, so the TYPO3 Reports "Composer Manifest" check no longer reports a description mismatch (#60)
 
 
 # 2.0.0
