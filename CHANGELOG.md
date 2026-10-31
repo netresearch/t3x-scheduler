@@ -1,5 +1,21 @@
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 <!-- SPDX-FileCopyrightText: Netresearch DTT GmbH -->
+# 2.0.1
+
+## BUGFIXES
+
+- Escape the content of `TextAreaField`; a stored value such as `</textarea><b>` closed the textarea and rendered as markup in the scheduler form
+- `FlashMessageTrait::addMessage()` accepts the integer severity its signature declares; it is converted to `ContextualFeedbackSeverity` (an integer outside the enum throws a `ValueError`) instead of raising a `TypeError`
+- A non-scalar submitted value (an array from a multi-select field) reaches the field validator as `null` instead of the string "Array" with a PHP warning
+- `getFieldValue()` throws an `InvalidArgumentException` naming the field when an array value holds anything but integers or strings
+- `AbstractField::getType()` returns `''` for a field subclass that sets no type instead of raising an `Error`
+- Spell "Task execution" correctly in the failure report mail
+
+## MISC
+
+- Use one extension title in `ext_emconf.php` and `composer.json`, so the TYPO3 Reports "Composer Manifest" check no longer reports a description mismatch
+
+
 # 2.0.0
 
 ## BREAKING
