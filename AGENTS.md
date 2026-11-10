@@ -122,6 +122,11 @@ Build/           → tool configs (phpstan, rector, fractor, phpunit XML) + Scri
 - Version source of truth: `ext_emconf.php`; PHPStan runs at level 10 (shared config of `netresearch/typo3-ci-workflows`) with baseline `Build/phpstan-baseline.neon`.
 <!-- AGENTS-GENERATED:END codebase-state -->
 
+## Changelog
+
+- Changes are recorded in [`CHANGELOG.md`](CHANGELOG.md), newest first: `# X.Y.Z`, then `## BREAKING`, `## FEATURES`, `## BUGFIXES`, `## MISC` as needed and `## Contributors`; each entry names its PR or issue, for example `(#59)`. There is no `Unreleased` section.
+- The release PR `chore(release): X.Y.Z` writes the version's section; feature and fix PRs leave the file alone.
+
 ## Scoped AGENTS.md (MUST read when working in these directories)
 <!-- AGENTS-GENERATED:START scope-index -->
 - `./Classes/AGENTS.md` — PHP source: scheduler task base classes, fields, validators
