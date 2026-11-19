@@ -84,7 +84,7 @@ Build/           → tool configs (phpstan, rector, fractor, phpunit XML) + Scri
 
 <!-- AGENTS-GENERATED:START ci-rules -->
 ## CI
-- `.github/workflows/ci.yml` calls reusable `netresearch/typo3-ci-workflows/.github/workflows/ci.yml@main` with matrix PHP 8.2-8.5 × TYPO3 `^13.4`/`^14.3`, functional tests on SQLite, fractor enabled.
+- `.github/workflows/ci.yml` calls reusable `netresearch/typo3-ci-workflows/.github/workflows/ci.yml@main` with matrix PHP 8.2-8.6 × TYPO3 `^13.4`/`^14.3`, functional tests on SQLite, fractor enabled.
 - Security/quality jobs (Composer Audit + Opengrep, CodeQL, betterleaks, zizmor, fuzz, license-check) live in `.github/workflows/checks.yml` — do not duplicate them into ci.yml. See `.github/workflows/AGENTS.md`.
 <!-- AGENTS-GENERATED:END ci-rules -->
 

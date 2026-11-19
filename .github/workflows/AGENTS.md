@@ -13,7 +13,7 @@ Every workflow here is a thin caller of a centralized reusable workflow in `netr
 ## Key Files
 | File | Purpose |
 |------|---------|
-| `ci.yml` | Extension test matrix (PHP 8.2-8.5 × TYPO3 ^13.4/^14.3, SQLite functionals, fractor) — a per-extension file, intentional drift (as is `release.yml`) |
+| `ci.yml` | Extension test matrix (PHP 8.2-8.6 × TYPO3 ^13.4/^14.3, SQLite functionals, fractor) — a per-extension file, intentional drift (as is `release.yml`) |
 | `checks.yml` | Security/quality jobs + `All security checks` gate — byte-identical and drift-enforced across all typo3-extensions |
 | `check-template-drift.yml` | Fails when a file governed by the `typo3-extension` template of `netresearch/.github` differs from it; `.github/template.yaml` lists `ci.yml` and `release.yml` as intentional drift |
 | `harness-verify.yml` | Agent-harness consistency check via `Build/Scripts/verify-harness.sh` |
