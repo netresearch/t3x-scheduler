@@ -49,7 +49,7 @@
     "require-dev": {
         "a9f/typo3-fractor": "^0.5 || ^1.0",
         "friendsofphp/php-cs-fixer": "^3.65",
-        "netresearch/typo3-ci-workflows": "^2.0.3",
+        "netresearch/typo3-ci-workflows": "^2.3.1",
         "overtrue/phplint": "^9.5",
         "phpstan/extension-installer": "^1.0",
         "phpstan/phpstan": "^1.0 || ^2.0",
@@ -90,6 +90,7 @@
             "fractor process --config Build/fractor.php"
         ],
         "ci:test:php:cgl": [
+            "@ci:test:changelog",
             "@ci:cgl --dry-run"
         ],
         "ci:test:php:lint": [
@@ -125,6 +126,8 @@
             "@ci:test:php:unit",
             "@ci:test:php:functional",
             "@ci:test:php:cgl"
-        ]
+        ],
+        "changelog:collect": "changelog-fragments collect",
+        "ci:test:changelog": "changelog-fragments check @no_additional_args"
     }
 }

@@ -17,3 +17,4 @@
 /Classes/CLAUDE.md export-ignore
 /Makefile export-ignore
 /renovate.json export-ignore
+/changelog.d/ export-ignore
