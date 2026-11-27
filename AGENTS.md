@@ -24,6 +24,7 @@
 | Unit tests | `composer ci:test:php:unit` |
 | Functional tests | `typo3DatabaseDriver=pdo_sqlite composer ci:test:php:functional` |
 | Full suite | `composer ci:test` |
+| Changelog fragments | `composer ci:test:changelog` |
 <!-- AGENTS-GENERATED:END commands -->
 
 > If commands fail, verify against composer.json/Makefile or ask user to update.
@@ -124,8 +125,9 @@ Build/           → tool configs (phpstan, rector, fractor, phpunit XML) + Scri
 
 ## Changelog
 
-- Changes are recorded in [`CHANGELOG.md`](CHANGELOG.md), newest first: `# X.Y.Z`, then `## BREAKING`, `## FEATURES`, `## BUGFIXES`, `## MISC` as needed and `## Contributors`; each entry names its PR or issue, for example `(#59)`. There is no `Unreleased` section.
-- The release PR `chore(release): X.Y.Z` writes the version's section; feature and fix PRs leave the file alone.
+- Changes are recorded in [`CHANGELOG.md`](CHANGELOG.md), [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/) from the release after 2.0.1 on: `## [X.Y.Z] - YYYY-MM-DD` with `### Added`, `### Changed`, `### Deprecated`, `### Removed`, `### Fixed`, `### Security` as needed, newest first, below `## [Unreleased]`. Releases up to 2.0.1 keep their original format (`# X.Y.Z` with `## FEATURES`, `## BUGFIXES` and the like) below.
+- A feature or fix PR writes its entry as a fragment `changelog.d/<branch-slug>.<section>.md` ([format](changelog.d/README.md)) instead of editing `CHANGELOG.md`; `composer ci:test:changelog` checks it, and CI runs it through `composer ci:test:php:cgl`.
+- The release PR `chore(release): X.Y.Z` runs `composer changelog:collect`, which moves the fragments into `## [Unreleased]`, and then renames that section to `## [X.Y.Z] - YYYY-MM-DD`.
 
 ## Scoped AGENTS.md (MUST read when working in these directories)
 <!-- AGENTS-GENERATED:START scope-index -->
